@@ -1,0 +1,251 @@
+@charset "UTF-8";
+@import "common/var";
+@import "mixins/button";
+@import "mixins/mixins";
+@import "mixins/utils";
+
+@include b(button) {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: $--button-default-fill;
+  border: $--border-base;
+  border-color: $--button-default-border;
+  color: $--button-default-color;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  transition: .1s;
+  font-weight: $--button-font-weight;
+  @include utils-user-select(none);
+  & + & {
+    margin-left: 10px;
+  }
+
+  @include button-size($--button-padding-vertical, $--button-padding-horizontal, $--button-font-size, $--button-border-radius);
+
+  &:hover {
+    border-color: $--color-primary-i-hover;
+    background-color: $--color-primary-i-hover;
+  }
+
+  &:active {
+    border-color: $--color-primary-i-active;
+    background-color: $--color-primary-i-active;
+    outline: none;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  & [class*="af-icon-"] {
+    & + span {
+      margin-left: 5px;
+    }
+  }
+
+  // @include when(plain) {
+  //   &:hover,
+  //   &:focus {
+  //     background: $--color-white;
+  //     border-color: $--color-primary;
+  //     color: $--color-primary;
+  //   }
+
+  //   &:active {
+  //     background: $--color-white;
+  //     border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+  //     color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+  //     outline: none;
+  //   }
+  // }
+
+  // @include when(active) {
+  //   color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+  //   border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+  // }
+
+  @include when(disabled) {
+    &,
+    &:hover,
+    &:focus {
+      color: $--button-disabled-color;
+      cursor: not-allowed;
+      background-image: none;
+      background-color: $--button-disabled-fill;
+      border-color: $--button-disabled-border;
+    }
+
+    &.af-button--text {
+      background-color: transparent;
+    }
+
+    // &.is-plain {
+    //   &,
+    //   &:hover,
+    //   &:focus {
+    //     background-color: $--color-white;
+    //     border-color: $--button-disabled-border;
+    //     color: $--button-disabled-color;
+    //   }
+    // }
+  }
+
+  @include when(loading) {
+    position: relative;
+    pointer-events: none;
+
+    &:before {
+      pointer-events: none;
+      content: '';
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: inherit;
+      background-color: rgba(255,255,255,.35);
+    }
+  }
+  // @include when(round) {
+  //   border-radius: 20px;
+  //   padding: 12px 23px;
+  // }
+  // @include when(circle) {
+  //   border-radius: 50%;
+  //   padding: $--button-padding-vertical;
+  // }
+  @include m(primary) {
+    @include button-variant($--button-primary-color, $--button-primary-fill, $--button-primary-border, $--button-primary-hover, $--button-primary-active);
+  }
+  @include m(warning) {
+    @include button-variant($--button-warning-color, $--button-warning-fill, $--button-warning-border, $--button-warning-hover, $--button-warning-active);
+  }
+  @include m(warning-i) {
+    @include button-variant($--button-warning-i-color, $--button-warning-i-fill, $--button-warning-i-border, $--button-warning-i-hover, $--button-warning-i-active);
+  }
+  @include m(danger) {
+    @include button-variant($--button-danger-color, $--button-danger-fill, $--button-danger-border, $--button-danger-hover, $--button-danger-active);
+  }
+  @include m(danger-i) {
+    @include button-variant($--button-danger-i-color, $--button-danger-i-fill, $--button-danger-i-border, $--button-danger-i-hover, $--button-danger-i-active);
+  }
+  // @include m(medium) {
+  //   @include button-size($--button-medium-padding-vertical, $--button-medium-padding-horizontal, $--button-medium-font-size, $--button-medium-border-radius);
+  //   @include when(circle) {
+  //     padding: $--button-medium-padding-vertical;
+  //   }
+  // }
+  @include m(small) {
+    @include button-size($--button-small-padding-vertical, $--button-small-padding-horizontal, $--button-small-font-size, $--button-small-border-radius);
+  }
+  @include m(icon) {
+    @include button-size($--button-icon-padding-vertical, $--button-icon-padding-horizontal, $--button-icon-font-size, $--button-icon-border-radius);
+  }
+  @include m(text) {
+    border-color: transparent;
+    color: $--color-primary;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:hover,
+    &:focus {
+      color: mix($--color-white, $--color-primary, $--button-hover-tint-percent);
+      border-color: transparent;
+      background-color: transparent;
+    }
+    &:active {
+      color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+      border-color: transparent;
+      background-color: transparent;
+    }
+
+    &.is-disabled,
+    &.is-disabled:hover,
+    &.is-disabled:focus {
+      border-color: transparent;
+    }
+  }
+}
+
+@include b(button-group) {
+  @include utils-clearfix;
+  display: inline-block;
+  vertical-align: middle;
+
+  & > .af-button {
+    float: left;
+    position: relative;
+    & + .af-button {
+      margin-left: 0;
+    }
+
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &:first-child:last-child {
+      border-top-right-radius: $--button-border-radius;
+      border-bottom-right-radius: $--button-border-radius;
+      border-top-left-radius: $--button-border-radius;
+      border-bottom-left-radius: $--button-border-radius;
+
+      &.is-round {
+        border-radius: 20px;
+      }
+
+      &.is-circle {
+        border-radius: 50%;
+      }
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:not(:last-child) {
+      margin-right: -1px;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      z-index: 1;
+    }
+
+    @include when(active) {
+      z-index: 1;
+    }
+  }
+
+  & > .af-dropdown {
+    & > .af-button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left-color: rgba($--color-white, 0.5);
+    }
+  }
+// 按钮之间的白色间隙是怎么实现的，答案就是css伪类:last-child和:first-child和:not，:first-child 选择器用于选取属于其父元素的首个子元素的指定选择器,也就是说如果多个相同层级的p标签排在一起，他们的父元素是div，那么p:first-child就会选中第一个p标签
+// 这里设置了第一个元素的右侧border和最后一个的左侧border，对于既不是第一个也不是最后一个的元素，设置双侧border,注意这里只设置了border的颜色，其实所有按钮默认都有border，颜色和按钮主体颜色一致，所以这里只修改了颜色就能达到目的
+  @each $type in (primary, primary-i, warning, warning-i, danger, danger-i) {
+    .af-button--#{$type} {
+      &:first-child {
+        border-right-color: rgba($--color-white, 0.5);
+      }
+      &:last-child {
+        border-left-color: rgba($--color-white, 0.5);
+      }
+      &:not(:first-child):not(:last-child) {
+        border-left-color: rgba($--color-white, 0.5);
+        border-right-color: rgba($--color-white, 0.5);
+      }
+    }
+  }
+}

@@ -1,0 +1,220 @@
+@import "mixins/mixins";
+@import "common/var";
+@import "input";
+
+@include b(input-number) {
+  position: relative;
+  display: inline-block;
+  // width: 100px;
+  line-height: #{$--input-height - 2};
+
+  .af-input {
+    display: block;
+    // width: 100px;
+    &__inner {
+      -webkit-appearance: none;
+      padding-left: #{$--input-height + 10};
+      padding-right: #{$--input-height + 10};
+      text-align: center;
+      color: #4183D7;
+      &:hover {
+        border-color: $--input-hover-border;
+      }
+      &:focus {
+        border: 1px solid #A0C1EB;
+      }
+    }
+  }
+
+  @include e((increase, decrease)) {
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    width: $--input-height;
+    height: auto;
+    text-align: center;
+    background: #D1F0FF;
+    color: #4183D7;
+    cursor: pointer;
+    font-size: 13px;
+
+    &:hover {
+      background: #C1E4FB;
+
+      &:not(.is-disabled) ~ .af-input .af-input__inner:not(.is-disabled) {
+        border-color: 1px solid transparent;
+      }
+    }
+
+    &.is-disabled {
+      color: $--disabled-color-base;
+      cursor: not-allowed;
+    }
+
+    &:active {
+      border-color: #e7f7ff;
+      background-color: #e7f7ff;
+      outline: none;
+    }
+  }
+
+  @include e(increase) {
+    right: 1px;
+    border-radius: 0 3px 3px 0;
+    border-left: 1px solid #fff;
+  }
+
+  @include e(decrease) {
+    left: 1px;
+    border-radius: 3px 0 0 3px;
+    border-right: 1px solid #fff;
+  }
+
+  @include when(disabled) {
+    @include e((increase, decrease)) {
+      // border-color: $--disabled-border-base;
+      color: $--disabled-border-base;
+
+      &:hover {
+        color: $--disabled-border-base;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include m(medium) {
+    width: 100px;
+    line-height: #{$--input-medium-height - 2};
+
+    @include e((increase, decrease)) {
+      width: $--input-medium-height;
+      font-size: $--input-medium-font-size;
+    }
+
+    .af-input__inner {
+      padding-left: #{$--input-medium-height + 7};
+      padding-right: #{$--input-medium-height + 7};
+    }
+  }
+
+  @include m(small) {
+    width: 100px;
+    line-height: #{$--input-small-height - 2};
+
+    @include e((increase, decrease)) {
+      width: $--input-small-height;
+      font-size: $--input-small-font-size;
+
+      [class*=af-icon] {
+        transform: scale(.9);
+      }
+    }
+
+    .af-input__inner {
+      padding-left: #{$--input-small-height + 7};
+      padding-right: #{$--input-small-height + 7};
+    }
+  }
+
+  @include m(mini) {
+    width: 100px;
+    line-height: #{$--input-mini-height - 2};
+
+    @include e((increase, decrease)) {
+      width: $--input-mini-height;
+      font-size: $--input-mini-font-size;
+
+      [class*=af-icon] {
+        transform: scale(.8);
+      }
+    }
+
+    .af-input__inner {
+      padding-left: #{$--input-mini-height + 7};
+      padding-right: #{$--input-mini-height + 7};
+    }
+  }
+
+  @include when(without-controls) {
+    .af-input__inner {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  @include when(controls-right) {
+    .af-input-number {
+      width: 36px;
+      height: 48px;
+    }
+    .af-input {
+      width: 36px;
+      height: 48px;
+    }
+    .af-input__inner {
+      // padding-left: 15px;
+      // padding-right: #{$--input-height + 10};
+      width: 36px;
+      height: 48px;
+      line-height: 22px;
+      padding: 13px 0;
+    }
+
+    @include e((increase, decrease)) {
+      // height: auto;
+      // line-height: #{($--input-height - 2) / 2};
+      width: 34px;
+      text-align: center;
+      height: 12px;
+      line-height: 12px;
+
+      [class*=af-icon] {
+        transform: scale(.8);
+      }
+    }
+
+    @include e(increase) {
+      // border-radius: 0 $--border-radius-base 0 0;
+      // border-bottom: $--border-base;
+      top: 1px;
+      left: 1px;
+      border-left: none;
+      border-radius: 3px 3px 0 0;
+      border-bottom: 1px solid #fff; 
+    }
+
+    @include e(decrease) {
+      // right: 1px;
+      // bottom: 1px;
+      // top: auto;
+      // left: auto;
+      // border-right: none;
+      // border-left: $--border-base;
+      // border-radius: 0 0 $--border-radius-base 0;
+      left: 1px;
+      bottom: 1px;
+      top: auto;
+      border-radius: 0 0 3px 3px;
+      border-right: none;
+      border-top: 1px solid #fff;
+    }
+
+    &[class*=medium] {
+      [class*=increase], [class*=decrease] {
+        line-height: #{($--input-medium-height - 2) / 2};
+      }
+    }
+
+    &[class*=small] {
+      [class*=increase], [class*=decrease] {
+        line-height: #{($--input-small-height - 2) / 2};
+      }
+    }
+
+    &[class*=mini] {
+      [class*=increase], [class*=decrease] {
+        line-height: #{($--input-mini-height - 2) / 2};
+      }
+    }
+  }
+}

@@ -1,0 +1,229 @@
+@import "mixins/mixins";
+@import "mixins/utils";
+@import "common/var";
+
+@include b(form) {
+  @include m(labaf-left) {
+    & .af-form-item__label {
+      text-align: left;
+    }
+  }
+  @include m(labaf-top) {
+    & .af-form-item__label {
+      float: none;
+      display: inline-block;
+      text-align: left;
+      padding: 0 0 10px 0;
+    }
+  }
+  @include m(inline) {
+    & .af-form-item {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+    & .af-form-item__label {
+      float: none;
+      display: inline-block;
+    }
+    & .af-form-item__content {
+      display: inline-block;
+      vertical-align: top;
+    }
+    &.af-form--labaf-top .af-form-item__content {
+      display: block;
+    }
+  }
+}
+@include b(form-item) {
+  margin-bottom: 0px;
+  @include utils-clearfix;
+
+  & .af-form-item {
+    margin-bottom: 0;
+  }
+
+  & .af-input__validateIcon {
+    display: none;
+  }
+
+  @include m(medium) {
+    .af-form-item__label {
+      line-height: 36px;
+    }
+    .af-form-item__content {
+      line-height: 36px;
+    }
+  }
+  @include m(small) {
+    .af-form-item__label {
+      line-height: 32px;
+    }
+    .af-form-item__content {
+      line-height: 32px;
+    }
+    &.af-form-item {
+      margin-bottom: 18px;
+    }
+  }
+  @include m(mini) {
+    .af-form-item__label {
+      line-height: 22px;
+    }
+    .af-form-item__content {
+      line-height: 22px;
+    }
+    &.af-form-item {
+      margin-bottom: 16px;
+    }
+  }
+
+  @include e(label) {
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 12px;
+    color: $--color-text-label;
+    line-height: 40px;
+    padding: 0 4px 0 0;
+    box-sizing: border-box;
+  }
+  @include e(content) {
+    line-height: 40px;
+    position: relative;
+    font-size: 14px;
+    @include utils-clearfix;
+
+    .af-input-group {
+      vertical-align: middle;
+      border: $--border-base-input;
+
+      &:hover {
+        border-color: $--input-hover-border;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $--input-focus-border;
+      }
+    }
+    .af-checkbox__input, .af-checkbox-group {
+      line-height: 1
+    }
+    .af-checkbox{
+      margin-top: 6px;
+    }
+    .af-select .af-input {
+      border: none;
+    }
+    .af-textarea {
+      .af-textarea__inner {
+        line-height: 1;
+      }
+      .af-textarea__restrict {
+        line-height: 14px;
+      }
+    }
+  }
+  @include e(error) {
+    color: $--color-danger;
+    font-size: 12px;
+    line-height: 1;
+    padding-top: 2px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    @include m(inline) {
+      position: relative;
+      top: auto;
+      left: auto;
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+  @include e(errorNoLabel) {
+    color: $--color-danger;
+    font-size: 12px;
+    line-height: 0;
+    padding-top: 8px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    @include m(inline) {
+      position: relative;
+      top: auto;
+      left: auto;
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+
+  @include when(required) {
+    @include pseudo('not(.is-no-asterisk)') {
+      & > .af-form-item__label:before {
+        content: '*';
+        color: $--color-danger;
+        margin-right: 4px;
+      }
+    }
+    @include pseudo('not(.is-no-asterisk)') {
+      & > .af-form-item__noLabel{
+        position: relative;
+      }
+      & > .af-form-item__noLabel:before {
+        content: "*";
+        color: $--color-danger;
+        margin-right: 4px;
+        position: absolute;
+        margin-top: 8px;
+        margin-left: 3px;
+        font-size: 12px;
+        z-index: 10;
+      }
+    }
+  }
+
+  @include when(error) {
+    & .af-input-group,
+    & .af-select .af-input__inner,
+    & .af-textarea {
+      &, &:focus {
+        border-color: $--color-danger;
+      }
+    }
+    & .af-input-group__append,
+    & .af-input-group__prepend {
+      & .af-input__inner {
+        border-color: transparent;
+      }
+    }
+    .af-input__validateIcon {
+      color: $--color-danger;
+    }
+  }
+  // 校验成功不要success外框提示
+  // @include when(success) {
+  //   & .af-input__inner,
+  //   & .af-textarea__inner {
+  //     &, &:focus {
+  //       border-color: $--color-success;
+  //     }
+  //   }
+  //   & .af-input-group__append,
+  //   & .af-input-group__prepend {
+  //     & .af-input__inner {
+  //       border-color: transparent;
+  //     }
+  //   }
+  //   .af-input__validateIcon {
+  //     color: $--color-success;
+  //   }
+  // }
+  @include m(feedback) {
+    .af-input__validateIcon {
+      display: inline-block;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import "common/var";
+
+.af-collapse-item__header {
+  &:hover {
+    color: $--color-primary-hover;
+  }
+
+  &:active {
+    color: $--color-primary-active;
+  }
+}

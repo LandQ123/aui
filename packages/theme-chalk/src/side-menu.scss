@@ -1,0 +1,89 @@
+@import "mixins/mixins";
+
+@include b (side-menu) {
+  $add_edit: #409eff;
+  $delete: #f56c6c;
+  $menu-item-hover: #ebf2fc;
+  $menu-item-text-active-color: #409eff;
+
+  @include b (menu) {
+    border-right: none;
+
+    @include b (submenu) {
+      @include b (submenu__title) {
+        height: 38px;
+        line-height: 38px;
+        color: #939ebd;
+        &:hover {
+          background-color: #ffffff;
+        }
+        @include b (submenu__icon-arrow) {
+          right: 10px;
+        }
+      }
+      @include b (menu-item) {
+        height: 28px;
+        line-height: 28px;
+        min-width: 160px;
+        font-size: 12px;
+        .childTitle {
+          display: inline-block;
+          width: 108px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+    @include b (menu-item) {
+      height: 38px;
+      line-height: 38px;
+      &:hover{
+        background-color: #ffffff;
+        color: $menu-item-text-active-color;
+      }
+      & *{
+        vertical-align: baseline;
+      }
+      &.is-active{
+        background-color: $menu-item-hover;
+        border-right: 2px solid $menu-item-text-active-color;
+        &:hover{
+          background-color: $menu-item-hover;
+        }
+      }
+    }
+    .funcBtn_submenu {
+      position: absolute;
+      right: 20px;
+      i {
+        font-size: 12px;
+        margin-right: 0px;
+      }
+      .af-icon-plus {
+        color: $add_edit;
+        font-weight: 700;
+        position: relative;
+        top: -3px;
+      }
+    }
+    .funcBtn_item {
+      position: absolute;
+      right: -4px;
+      top: -3px;
+      i {
+        font-size: 12px;
+        margin-right: 0px;
+      }
+      .af-button + .af-button {
+        margin-left: -12px;
+      }
+      .af-icon-edit {
+        color: $add_edit;
+      }
+      .af-icon-delete {
+        color: $delete;
+      }
+    }
+  }
+}

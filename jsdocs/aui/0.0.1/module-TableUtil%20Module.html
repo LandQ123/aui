@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>TableUtil Module - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="aria.html">aria</a></li><li><a href="module-Date-fecha.html">fecha</a></li><li><a href="module-TableStore%2520Module-TableStore.html">TableStore</a><ul class='methods'><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#cleanSelection">cleanSelection</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#clearFilter">clearFilter</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#clearSelection">clearSelection</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#clearSort">clearSort</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#commit">commit</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#isRowExpanded">isRowExpanded</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#isSelected">isSelected</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#scheduleLayout">scheduleLayout</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#setCurrentRowKey">setCurrentRowKey</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#setExpandRowKeys">setExpandRowKeys</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#toggleRowExpansion">toggleRowExpansion</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#toggleRowSelection">toggleRowSelection</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#updateAllSelected">updateAllSelected</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#updateColumns">updateColumns</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore.html#updateCurrentRow">updateCurrentRow</a></li></ul></li><li><a href="Popper.html">Popper</a><ul class='methods'><li data-type='method'><a href="Popper.html#_getPosition">_getPosition</a></li><li data-type='method'><a href="Popper.html#_getPosition">_getPosition</a></li><li data-type='method'><a href="Popper.html#destroy">destroy</a></li><li data-type='method'><a href="Popper.html#destroy">destroy</a></li><li data-type='method'><a href="Popper.html#isModifierRequired">isModifierRequired</a></li><li data-type='method'><a href="Popper.html#isModifierRequired">isModifierRequired</a></li><li data-type='method'><a href="Popper.html#onCreate">onCreate</a></li><li data-type='method'><a href="Popper.html#onCreate">onCreate</a></li><li data-type='method'><a href="Popper.html#onUpdate">onUpdate</a></li><li data-type='method'><a href="Popper.html#onUpdate">onUpdate</a></li><li data-type='method'><a href="Popper.html#parse">parse</a></li><li data-type='method'><a href="Popper.html#parse">parse</a></li><li data-type='method'><a href="Popper.html#runModifiers">runModifiers</a></li><li data-type='method'><a href="Popper.html#runModifiers">runModifiers</a></li><li data-type='method'><a href="Popper.html#update">update</a></li><li data-type='method'><a href="Popper.html#update">update</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-Date.html">Date</a><ul class='methods'><li data-type='method'><a href="module-Date.html#~parse">parse</a></li></ul></li><li><a href="module-Resize%2520Event.html">Resize Event</a></li><li><a href="module-TableStore%2520Module.html">TableStore Module</a><ul class='methods'><li data-type='method'><a href="module-TableStore%252520Module.html#~doFlattenColumns">doFlattenColumns</a></li><li data-type='method'><a href="module-TableStore%252520Module.html#~getKeysMap">getKeysMap</a></li><li data-type='method'><a href="module-TableStore%252520Module.html#~sortData">sortData</a></li><li data-type='method'><a href="module-TableStore%252520Module.html#~toggleRowExpansion">toggleRowExpansion</a></li><li data-type='method'><a href="module-TableStore%252520Module.html#~toggleRowSelection">toggleRowSelection</a></li></ul></li><li><a href="module-TableUtil%2520Module.html">TableUtil Module</a><ul class='methods'><li data-type='method'><a href="module-TableUtil%252520Module.html#~isObject">isObject</a></li></ul></li><li><a href="module-Util%2520Module.html">Util Module</a><ul class='methods'><li data-type='method'><a href="module-Util%252520Module.html#.getPropByPath">getPropByPath</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="module-TableStore%2520Module-TableStore_mutations.html">mutations</a><ul class='methods'><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.changeSortCondition">changeSortCondition</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.filterChange">filterChange</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.insertColumn">insertColumn</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.removeColumn">removeColumn</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.rowSelectedChanged">rowSelectedChanged</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.setCurrentRow">setCurrentRow</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.setData">setData</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.setHoverRow">setHoverRow</a></li><li data-type='method'><a href="module-TableStore%252520Module-TableStore_mutations.html#.sort">sort</a></li></ul></li><li><a href="Popper.modifiers.html">modifiers</a><ul class='methods'><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.applyStyle">Popper#modifiers.applyStyle</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.applyStyle">Popper#modifiers.applyStyle</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.arrow">Popper#modifiers.arrow</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.arrow">Popper#modifiers.arrow</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.flip">Popper#modifiers.flip</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.flip">Popper#modifiers.flip</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.keepTogether">Popper#modifiers.keepTogether</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.keepTogether">Popper#modifiers.keepTogether</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.offset">Popper#modifiers.offset</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.offset">Popper#modifiers.offset</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.preventOverflow">Popper#modifiers.preventOverflow</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.preventOverflow">Popper#modifiers.preventOverflow</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.shift">Popper#modifiers.shift</a></li><li data-type='method'><a href="Popper.modifiers.html#.Popper#modifiers.shift">Popper#modifiers.shift</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">TableUtil Module</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description"><p>表格工具函数模块</p></div>
+            
+
+            
+                
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_table_src_util.js.html">packages/table/src/util.js</a>, <a href="packages_table_src_util.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".getCell"><span class="type-signature">(static, constant) </span>getCell<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_table_src_util.js.html">packages/table/src/util.js</a>, <a href="packages_table_src_util.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>获取 td 元素，即单元格</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".getColumnByCell"><span class="type-signature">(static, constant) </span>getColumnByCell<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_table_src_util.js.html">packages/table/src/util.js</a>, <a href="packages_table_src_util.js.html#line128">line 128</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>根据单元格查找列</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".getColumnById"><span class="type-signature">(static, constant) </span>getColumnById<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_table_src_util.js.html">packages/table/src/util.js</a>, <a href="packages_table_src_util.js.html#line112">line 112</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>通过 id 来获取列</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".getRowIdentity"><span class="type-signature">(static, constant) </span>getRowIdentity<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_table_src_util.js.html">packages/table/src/util.js</a>, <a href="packages_table_src_util.js.html#line141">line 141</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>获取某一行的值中的某些值</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".orderBy"><span class="type-signature">(static, constant) </span>orderBy<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_table_src_util.js.html">packages/table/src/util.js</a>, <a href="packages_table_src_util.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>排序</p>
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~isObject"><span class="type-signature">(inner) </span>isObject<span class="signature">(obj)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_table_src_util.js.html">packages/table/src/util.js</a>, <a href="packages_table_src_util.js.html#line31">line 31</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>判断是不是对象</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 15 2018 19:03:19 GMT+0800 (GMT+08:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

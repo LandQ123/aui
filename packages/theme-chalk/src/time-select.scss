@@ -1,0 +1,41 @@
+@import "common/var";
+@import "./date-picker/picker.scss";
+@import "./date-picker/date-picker.scss";
+@import "./scrollbar.scss";
+@import "./popper";
+
+.time-select {
+  margin: 5px 0;
+  min-width: 0;
+}
+
+.time-select .af-picker-panel__content {
+  max-height: 200px;
+  margin: 0;
+}
+
+.time-select-item {
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 24px;
+}
+
+.time-select-item.selected:not(.disabled) {
+  // color: $--color-primary;
+  color: $--color-primary-hover;
+  // font-weight: bold;
+  background-color: $--color-blue-primary;
+}
+
+.time-select-item.disabled {
+  color: $--datepicker-border-color;
+  cursor: not-allowed;
+}
+
+.time-select-item:hover {
+  // background-color: $--background-color-base;
+  background-color: $--color-blue-primary;
+  // font-weight: bold;
+  color: $--color-primary-hover;
+  cursor: pointer;
+}

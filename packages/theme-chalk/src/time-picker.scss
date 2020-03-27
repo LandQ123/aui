@@ -1,0 +1,183 @@
+@import "./date-picker/picker.scss";
+@import "./date-picker/picker-panel.scss";
+@import "./date-picker/time-spinner.scss";
+@import "./date-picker/time-picker.scss";
+@import "./date-picker/time-range-picker.scss";
+@import "./input.scss";
+@import "./scrollbar.scss";
+@import "./popper";
+
+.af-date-editor.af-date-editor--timerange {
+  &.af-input__inner {
+    // width: 180px;
+  }
+
+  > .af-range-input {
+    font-size: 12px;
+    background: $--color-input-bg;
+  }
+
+  > .af-range-separator {
+    height: auto;
+    font-size: 12px;
+    line-height: 24px;
+    padding: 0 4px;
+  }
+}
+
+// icon
+.af-input__icon {
+  font-size: 14px;
+  color: $--color-primary;
+}
+
+// placeholder 样式
+.af-date-editor.af-date-editor--timerange .af-range-input {
+  color: $--color-primary;
+
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    color: $--color-primary;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $--color-primary;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $--color-primary;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $--color-primary;
+  }
+}
+
+// 弹出窗(公共)
+.time-select.af-popper[x-placement^=bottom],
+.af-time-panel.af-popper[x-placement^=bottom],
+.af-time-range-picker.af-popper[x-placement^=bottom] {
+  margin-top: 1px;
+
+  > .popper__arrow {
+    display: none;
+  }
+
+  .af-time-panel__content {
+    padding: 0 3px;
+  }
+
+  .af-time-spinner__item.active:not(.disabled) {
+    color: $--color-black;
+    font-weight: bolder;
+  }
+
+  .af-time-spinner__item:hover:not(.disabled):not(.active) {
+    background: $--color-blue-primary;
+  }
+
+  .af-time-panel__footer {
+    margin-top: 10px;
+    height: 28px;
+    padding: 0;
+
+    &.is-arrow {
+      margin-top: 0;
+    }
+  }
+
+  .af-time-panel__btn {
+    margin: 0 10px 0 0;
+    padding: 0;
+    color: $--color-black;
+
+    &:hover {
+      color: $--color-primary-hover;
+    }
+
+    &.confirm {
+      font-weight: normal;
+    }
+  }
+
+  .af-time-spinner__wrapper {
+    max-height: 150px;
+
+    &.is-arrow {
+      max-height: 140px;
+    }
+  }
+
+  .af-time-spinner__item {
+    height: 24px;
+    line-height: 24px;
+  }
+
+  .af-time-panel__content:after,
+  .af-time-panel__content:before {
+    margin-top: -18px;
+    height: 22px;
+  }
+
+  .is-arrow.af-time-panel__content:after,
+  .is-arrow.af-time-panel__content:before {
+    margin-top: -13px;
+  }
+
+  .af-time-panel__content {
+    padding: 0;
+  }
+
+  .af-time-spinner__list:after, 
+  .af-time-spinner__list:before {
+    height: 56px;
+  }
+
+  .af-time-spinner__arrow.af-icon-arrow-up {
+    top: 5px;
+  }
+
+  .af-time-spinner__arrow.af-icon-arrow-down {
+    bottom: 8px;
+  }
+
+  .af-time-spinner__wrapper.is-arrow .af-time-spinner__list {
+    // transform: translateY(-16px);
+    margin-top: 8px;
+  }
+}
+
+// 弹出窗(时间点)
+.af-time-panel.af-popper {
+  padding-bottom: 10px;
+  
+  .af-scrollbar__bar {
+    display: none;
+  }
+}
+
+// 弹出窗(范围)
+.af-time-range-picker.af-popper {
+
+  .af-time-range-picker__content {
+    padding: 0;
+  }
+
+  .af-time-range-picker__cell {
+    padding: 0;
+  }
+
+  .af-time-range-picker__body {
+    border: none;
+  }
+
+  .af-time-range-picker__separator {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -28px;
+    margin-left: -4px;
+    font-size: 12px;
+    color: $--color-text-placeholder;
+  }
+
+  .af-scrollbar__bar {
+    display: none;
+  }
+}

@@ -1,0 +1,237 @@
+@import "./date-picker/date-table.scss";
+@import "./date-picker/month-table.scss";
+@import "./date-picker/year-table.scss";
+@import "./date-picker/time-spinner.scss";
+@import "./date-picker/picker.scss";
+@import "./date-picker/date-picker.scss";
+@import "./date-picker/date-range-picker.scss";
+@import "./date-picker/time-range-picker.scss";
+@import "./date-picker/time-picker.scss";
+@import "./input.scss";
+@import "./scrollbar.scss";
+@import "./popper";
+
+// 输入框相关
+.af-date-editor {
+
+  .af-input__inner {
+    width: auto;
+    min-width: 160px;
+  }
+
+  // 范围相关
+  &.af-date-editor--datetimerange,
+  &.af-date-editor--daterange {
+    > .af-range-separator {
+      height: auto;
+      font-size: 12px;
+      line-height: 22px;
+    }
+
+    > .af-range-input {
+      font-size: 12px;
+      background: $--color-input-bg;
+    }
+
+    .af-range__icon {
+      display: inline-table;
+      // margin-left: 10px;
+      // margin-right: -10px;
+      // float: right;
+      // line-height: 22px;
+      line-height: 16px;
+      // font-size: 12px;
+    }
+  }
+
+  &.af-date-editor--datetimerange {
+    &.af-input__inner {
+      width: auto;
+      // min-width: 340px;
+    }
+
+    > .af-range__icon {
+      // transform: translate(22px, 0);
+    }
+  }
+
+  &.af-date-editor--daterange {
+    &.af-input__inner {
+      // width: 220px;
+    }
+
+    .af-range-separator {
+      width: 6%;
+    }
+  }
+}
+
+// icon
+
+
+// placeholder 样式
+.af-date-editor .af-input__inner,
+.af-date-editor.af-date-editor--datetimerange .af-range-input,
+.af-date-editor.af-date-editor--daterange .af-range-input,
+.af-date-picker .af-input__inner,
+.af-date-range-picker .af-input__inner {
+  color: $--color-primary;
+
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    color: $--color-primary;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $--color-primary;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $--color-primary;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $--color-primary;
+  }
+}
+
+// 弹出框(公共)
+.af-date-picker.af-popper[x-placement^=bottom],
+.af-date-range-picker.af-popper[x-placement^=bottom] {
+  margin-top: 1px;
+
+  > .popper__arrow {
+    display: none;
+  }
+
+  .af-date-table {
+    th {
+      padding: 0;
+      border-bottom: 1px solid #eeeeee;
+
+      &:first-child,
+      &:last-child {
+        color: #a0a0a0;
+      }
+    }
+
+    td {
+      padding: 0;
+      width: 30px;
+      
+      
+      span {
+        width: 100%;
+        height: 100%;
+        line-height: 30px;
+      }
+
+      div {
+        padding: 0;
+      }
+
+      &:first-child,
+      &:last-child {
+        color: #a0a0a0;
+      }
+
+      &.prev-month,
+      &.next-month {
+        color: #dddddd;
+      }
+      
+      // 范围高亮相关
+      &.start-date div {
+        margin-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &.in-range div {
+        background: #d9e6f7;
+      }
+
+    }
+  }
+}
+
+// 弹出框(单日)
+.af-date-picker.af-popper {
+  
+  // 日期时间
+  .af-date-picker__time-header {
+    padding: 8px 0 5px;
+    margin: 0;
+    width: 250px;
+  }
+  
+  .af-date-picker__header {
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .af-picker-panel__content {
+    margin: 0 auto;
+    padding: 0 20px 10px;
+  }
+
+  .af-date-picker__header-label {
+    font-size: 14px;
+  }
+}
+
+// 弹出框(范围)
+.af-date-range-picker.af-popper {
+  .af-date-range-picker__content {
+    padding: 10px 20px;
+  }
+
+  .af-date-range-picker__time-header {
+    padding: 8px 0 5px;
+    margin: 0;
+    width: 520px;
+  }
+
+  .af-date-range-picker__header {
+    padding-bottom: 10px;
+
+    > div {
+      font-size: 14px;
+    }
+  }
+}
+
+// 日期时间选择器 - 解决时间与日期共用面板需求
+.af-picker-panel.af-popper.has-time {
+
+  .af-time-panel__content.has-seconds {
+    height: 100%;
+
+    &:before {
+      top: 36%;
+      height: 40px;
+    }
+
+    &:after {
+      top: 36%;
+      height: 40px;
+    }
+
+    .af-time-spinner.has-seconds {
+      height: 100%;
+
+      .af-time-spinner__wrapper {
+        height: 100%;
+        max-height: unset;
+      }
+
+      .af-time-spinner__item {
+        height: 40px;
+        line-height: 40px;
+      }
+
+      .af-scrollbar__view.af-time-spinner__list {
+        &::after {
+          height: 130px;
+        }
+      }
+
+    }
+  }
+}

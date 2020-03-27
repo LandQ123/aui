@@ -1,0 +1,110 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(alert) {
+  width: 100%;
+  padding: $--alert-padding;
+  margin: 0;
+  box-sizing: border-box;
+  border-radius: $--alert-border-radius;
+  position: relative;
+  background-color: $--color-white;
+  overflow: hidden;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  transition: opacity .2s;
+
+  @include when(center) {
+    justify-content: center;
+  }
+
+  @include m(success) {
+    background-color: $--alert-success-color;
+    color: $--color-success;
+
+    .af-alert__description {
+      color: $--color-success;
+    }
+  }
+
+  @include m(info) {
+    background-color: $--alert-info-color;
+    color: $--color-info;
+
+    .af-alert__description {
+      color: $--color-info;
+    }
+  }
+
+  @include m(warning) {
+    background-color: $--bg-alert-warning;
+    color: $--color-text-label;
+
+    .af-alert__icon {
+      color: $--color-warning;
+    }
+
+    .af-alert__description {
+      color: $--color-text-label;
+    }
+  }
+
+  @include m(error) {
+    background-color: $--alert-danger-color;
+    color: $--color-danger;
+
+    .af-alert__description {
+      color: $--color-danger;
+    }
+  }
+
+  @include e(content) {
+    display: table-cell;
+  }
+
+  @include e(icon) {
+    font-size: $--alert-icon-size;
+    width: $--alert-icon-size;
+    margin: 2px 4px 0 0;
+    @include when(big) {
+      font-size: $--alert-icon-large-size;
+      width: $--alert-icon-large-size;
+      margin-right: 10px;
+    }
+  }
+
+  @include e(title) {
+    font-size: $--alert-title-font-size;
+    @include when(bold) {
+      font-weight: bold;
+    }
+  }
+
+  & .af-alert__description {
+    font-size: $--alert-description-font-size;
+    margin: 6px 0 2px;
+    line-height: 1;
+  }
+
+  @include e(closebtn) {
+    font-size: $--alert-close-font-size;
+    color: $--color-text-placeholder;
+    opacity: 1;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+
+    @include when(customed) {
+      font-style: normal;
+      font-size: $--alert-close-customed-font-size;
+      top: 4px;
+    }
+  }
+}
+
+.af-alert-fade-enter,
+.af-alert-fade-leave-active {
+  opacity: 0;
+}

@@ -1,0 +1,20 @@
+{
+  "zh-CN": {
+    "home": "AUI - 网站快速成型工具",
+    "guide": "指南 | AUI",
+    "component": "组件 | AUI",
+    "resource": "资源 | AUI"
+  },
+  "en-US": {
+    "home": "AUI - A Desktop UI Toolkit for Web",
+    "guide": "Guide | AUI",
+    "component": "Component | AUI",
+    "resource": "Resource | AUI"
+  },
+  "es": {
+    "home": "AUI - Un kit de interfaz de usuario para la web",
+    "guide": "Guía | AUI",
+    "component": "Componentes | AUI",
+    "resource": "Recursos | AUI"
+  }
+}

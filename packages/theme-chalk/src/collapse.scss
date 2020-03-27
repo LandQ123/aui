@@ -1,0 +1,102 @@
+@import "mixins/mixins";
+@import "common/var";
+@import "common/transition";
+
+@include b(collapse-primary) {
+  // border-top: 1px solid $--collapse-border-color;
+  // border-bottom: 1px solid $--collapse-border-color;
+}
+@include b(collapse-item) {
+  @include e(header) {
+    position: relative;
+    padding: 3px 0;
+    // height: $--collapse-header-height;
+    // line-height: $--collapse-header-height;
+    background-color: $--collapse-header-fill;
+    cursor: pointer;
+    // border-bottom: 1px solid $--collapse-border-color;
+    font-size: $--collapse-header-size;
+    // font-weight: 500;
+    // text-indent: 10px;
+    transition: border-bottom-color .3s;
+    outline: none;
+    @include e(arrow) {
+      position: absolute;
+      // margin-right: 10px;
+      transition: transform .3s;
+      // float: right;
+      // line-height: $--collapse-header-height;
+      font-weight: bolder;
+      font-size: 10px;
+      transform-origin: 70% 50%;
+      @include when(active) {
+        transform: rotate(90deg);
+      }
+    }
+    &.focusing:focus:not(:hover){
+      color: $--color-primary;
+    }
+    @include when(active) {
+      border-bottom-color: transparent;
+    }
+  }
+
+  @include e(wrap) {
+    will-change: height;
+    background-color: $--collapse-content-fill;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  @include e(content) {
+    // padding-bottom: 25px;
+    // padding: 0 10px;
+    font-size: $--collapse-content-size;
+    color: $--color-black;
+    line-height: 1.769230769230769;
+  }
+
+  &:last-child {
+    margin-bottom: -1px;
+  }
+}
+
+// primary
+.primary {
+  .af-collapse-item {
+    margin-bottom: 4px;
+  }
+  .af-collapse-item__header {
+    border-left: 2px solid $--color-primary;
+    color: $--collapse-header-color;
+  }
+
+  .af-collapse-item__arrow {
+    top: 50%;
+    right: 10px;
+    margin-top: -6px;
+  }
+}
+
+// simple
+.simple {
+  background: #fff;
+
+  .af-collapse-item {
+    padding: 0 10px;
+
+    &:not(:first-child) .af-collapse-item__header {
+      border-top: 1px solid $--collapse-border-color;
+    }
+  }
+  
+  .af-collapse-item__header {
+    text-indent: 15px;
+  }
+  
+  .af-collapse-item__arrow {
+    top: 8px;
+    left: -20px;
+    color: #939ebd;
+  }
+}

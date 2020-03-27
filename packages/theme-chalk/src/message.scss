@@ -1,0 +1,181 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(message) {
+  width: $--message-min-width;
+  box-sizing: border-box;
+  border-radius: $--border-radius-base;
+  border-width: $--border-width-base;
+  border-style: $--border-style-base;
+  border-color: $--border-color-lighter;
+  position: fixed;
+  left: 50%;
+  top: 55px;
+  transform: translateX(-50%);
+  background-color: #fff;
+  transition: opacity 0.3s, transform .4s;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  
+  @include m(success) {
+    padding: $--message-padding;
+    background-color: $--color-success-lighter;
+    border-color: $--color-success-light;
+    .af-message__icon {
+      margin-right: 10px;
+    }
+    .af-message__content {
+      padding: 0;
+      font-size: 14px;
+      color: $--message-success-color;
+      line-height: 1;
+      overflow: hidden;
+      &:focus {
+        outline-width: 0;
+      }
+    }
+
+    &.is-closable {
+      .af-message__content {
+        padding-right: 16px;
+      }
+    }
+    p {
+      margin: 0;
+    }
+  }
+
+  @include e(wrapper) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: $--message-min-height;
+    max-height: $--message-max-height;
+  }
+
+  @include e(header) {
+    position: relative;
+    height: $--message-header-height;
+    box-sizing: border-box;
+    padding: $--message-padding-regular $--message-padding-primary;
+    background-color: $--message-background-color;
+  }
+
+  @include e(title) {
+    padding-left: 0;
+    margin-bottom: 0;
+    font-size: $--font-size-medium;
+    line-height: 1;
+    color: $--message-header-color;
+  }
+
+  @include e(headerbtn) {
+    position: absolute;
+    top: $--message-padding-regular;
+    right: $--message-padding-primary;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: $--message-close-size;
+    cursor: pointer;
+
+    .af-message__close {
+      color: $--color-info;
+    }
+
+    &:focus,
+    &:hover {
+      .af-message__close {
+        color: $--color-primary;
+      }
+    }
+  }
+
+  @include e(content) {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    padding: 30px $--message-padding-secondary;
+    color: $--message-content-color;
+    font-size: $--message-content-font-size;
+  }
+
+  @include e(status) {
+    position: absolute;
+    top: 22px;
+    font-size: 40px;
+
+    &::before {
+      // 防止图标切割
+      padding-left: 1px;
+    }
+
+    +.af-message__message {
+      padding-left: 60px;
+    }
+  }
+
+  @include e(message) {
+    .af-message__message-title {
+      line-height: 24px;
+      font-size: 16px;
+      font-weight: $--font-weight-bold;
+    }
+
+    .af-message__message-content {
+      line-height: 24px;
+      &.is-with-title {
+        padding-top: 4px;
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  @include e(closeBtn) {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: $--message-close-color;
+    font-size: $--message-close-size;
+
+    &:focus {
+      outline-width: 0;
+    }
+    &:hover {
+      color: $--message-close-hover-color;
+    }
+  }
+
+  & .af-icon-success {
+    color: $--message-success-color;
+  }
+
+  & .af-icon-error {
+    color: $--message-danger-color;
+  }
+
+  & .af-icon-info {
+    color: $--message-info-color;
+  }
+
+  & .af-icon-question {
+    color: $--message-question-color;
+  }
+
+  & .af-icon-warning {
+    color: $--message-warning-color;
+  }
+}
+
+.af-message-fade-enter,
+.af-message-fade-leave-active {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}

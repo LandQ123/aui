@@ -1,0 +1,9 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(descriptionList-title) {
+  margin: 0 0 16px 0;
+  color: $--color-text-black;
+  font-size: $--font-size-base;
+  font-weight: $--font-weight-medium;
+}

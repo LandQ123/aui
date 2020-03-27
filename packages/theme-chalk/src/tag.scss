@@ -1,0 +1,138 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(tag) {
+  background-color: $--color-tag-bg;
+  display: inline-block;
+  padding: $--tag-padding;
+  height: 32px;
+  line-height: 30px;
+  font-size: $--tag-font-size;
+  color: $--tag-color;
+  border-radius: $--tag-border-radius;
+  box-sizing: border-box;
+  // border: 1px solid $--color-tag-bg;
+  white-space: nowrap;
+
+  .af-icon-close {
+    position: relative;
+    cursor: pointer;
+    top: 0;
+    right: -5px;
+    color: $--color-text-placeholder;
+    font-size: 10px;
+
+    &::before {
+      display: block;
+    }
+
+    &:hover {
+      color: $--tag-color;
+    }
+  }
+
+  @include m(info) {
+    background-color: $--color-tag-bg;
+    border-color: $--tag-info-border;
+    color: $--color-black;
+
+    @include when(hit) {
+      border-color: $--tag-info-color;
+    }
+
+    .af-tag__close {
+      color: $--color-text-placeholder;
+    }
+
+    .af-tag__close:hover {
+      color: $--color-text-label;
+    }
+  }
+
+  @include m(success) {
+    background-color: $--tag-success-fill;
+    border-color: $--tag-success-border;
+    color: $--tag-success-color;
+
+    @include when(hit) {
+      border-color: $--tag-success-color;
+    }
+
+    .af-tag__close {
+      color: $--tag-success-color;
+    }
+
+    .af-tag__close:hover {
+      background-color: $--tag-success-color;
+      color: $--color-white;
+    }
+  }
+
+  @include m(warning) {
+    background-color: $--tag-warning-fill;
+    border-color: $--tag-warning-border;
+    color: $--tag-warning-color;
+
+    @include when(hit) {
+      border-color: $--tag-warning-color;
+    }
+
+    .af-tag__close {
+      color: $--tag-warning-color;
+    }
+
+    .af-tag__close:hover {
+      background-color: $--tag-warning-color;
+      color: $--color-white;
+    }
+  }
+
+  @include m(danger) {
+    background-color: $--tag-danger-fill;
+    border-color: $--tag-danger-border;
+    color: $--tag-danger-color;
+
+    @include when(hit) {
+      border-color: $--tag-danger-color;
+    }
+
+    .af-tag__close {
+      color: $--tag-danger-color;
+    }
+
+    .af-tag__close:hover {
+      background-color: $--tag-danger-color;
+      color: $--color-white;
+    }
+  }
+
+  @include m(medium) {
+    height: 28px;
+    line-height: 26px;
+
+    .af-icon-error {
+      transform: scale(.8);
+    }
+  }
+
+  @include m(small) {
+    height: 22px;
+    padding: 0 10px;
+    line-height: 22px;
+
+    .af-icon-error {
+      transform: scale(.8);
+    }
+  }
+
+  @include m(mini) {
+    height: 18px;
+    padding: 0 15px 0 10px;
+    line-height: 18px;
+
+    .af-icon-error {
+      margin-left: -3px;
+      transform: scale(.7);
+    }
+  }
+}
