@@ -17,13 +17,13 @@ TODO:
 6.表单验证
 7.组件实例方法 methods
 8.固定高度 √
+9.重置函数 √
 */
+
 console.log(Table);
 // const REGION_MAP = {}
 
-const Type = obj => {
-  return Object.prototype.toString.call(obj).replace(/^\[object\s(\w+)\]$/, '$1').toLowerCase();
-};
+const Type = obj => Object.prototype.toString.call(obj).replace(/^\[object\s(\w+)\]$/, '$1').toLowerCase();
 
 const SET_DEFAULT_VALUE = field => {
   if (Type(field.value) === 'array') return [];
@@ -133,7 +133,7 @@ export default {
       const MoreHeight = this.$refs.more && this.$refs.more.offsetHeight || 0;
       const OffsetTop = this.$el.getBoundingClientRect().top;
 
-      let bodyHeight = ClientHeight - OffsetTop - FooterHeight - MainHeight - MoreHeight - 8;
+      let bodyHeight = ClientHeight - OffsetTop - FooterHeight - MainHeight - MoreHeight - 12;
       this.$set(this.tableAttrs, 'height', bodyHeight);
 
     },
@@ -154,7 +154,14 @@ export default {
     oninput(e) {
       console.log(e);
     },
+
     /* -------------------------------------------  对外暴露的函数  ------------------------------------------- */
+    /**
+     * 重置所有查询条件
+     */
+    resetAllVal() {
+      this.onReset();
+    },
     /**
      * 获取field组件实例
      * @param {String} key field定义的key
@@ -226,6 +233,13 @@ export default {
     const TemplateMain = (
       <section ref="main" class="af-table-query__main">
         {genField(fieldList, 'main')}
+        {fieldList.length > 3 &&
+          (
+            <af-button size="mini" type="text" style="margin-left: 10px;" class="af-table-query__reset" onClick={this.onReset}>
+              <span>重置</span>
+            </af-button>
+          )
+        }
         {
           this.hasOptionQuery && <af-button size="mini" type="text" style="margin-left: 10px;" class="af-table-query__arrow" onClick={this.onQueryMore}>
             <span>{optionQueryShow ? '收起' : '更多'}</span>
@@ -236,18 +250,13 @@ export default {
     );
     const TemplateMore = (
       <section ref="more" style={{ display: optionQueryShow ? 'block' : 'none' }} class="af-table-query__more">
-        {genField(fieldList, 'option')}
-        {
-          <af-button size="mini" type="text" style="margin-left: 10px;" class="af-table-query__reset" onClick={this.onReset}>
-            <span>重置</span>
-          </af-button>
-        }
+        { genField(fieldList, 'option') }
       </section>
     );
 
     const renderTable = () => {
       return (
-        <section ref="tablebody">
+        <section ref="tablebody" class="af-table-query__content">
           <Table ref="xtable"
             tableEvents={tableEvents}
             tableAttrs={tableAttrs}

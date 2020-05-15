@@ -6,7 +6,7 @@
 
   %_commonSection {
     background: #fff;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     padding-right: 10px;
     @include utils-clearfix;
   }
@@ -23,7 +23,7 @@
   @include e(field){
     display: inline-block;
     margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   @include e(arrow){
@@ -53,9 +53,12 @@
     }
   }
 
+  @include e(content){
+    margin-top: 4px;
+  }
+
   @include e(footer){
     background: #fff;
-    padding: 5px 0;
   }
 
   .af-divider-horizontal{

@@ -71,12 +71,16 @@ export default {
   },
 
   render(h) {
-    let template = <div class={['af-pagination', {
-      'is-background': this.background,
-      'af-pagination--small': this.small
-    }] }></div>;
     const layout = this.layout || '';
     if (!layout) return;
+    const components = layout.split(',').map((item) => item.trim());
+
+    let template = <div class={['af-pagination', {
+      'is-background': this.background,
+      'af-pagination--small': this.small,
+      'af-pagination__isTotal': components.length === 1 && components[0] === 'total' // 只有total的时候高度为20px
+    }] }></div>;
+
     const TEMPLATE_MAP = {
       start: <start></start>,
       prev: <prev></prev>,
@@ -88,11 +92,13 @@ export default {
       slot: <my-slot></my-slot>,
       total: <total></total>
     };
-    const components = layout.split(',').map((item) => item.trim());
+
+    const leftWrapper = <div class="af-pagination__leftwrapper"></div>;
     const rightWrapper = <div class="af-pagination__rightwrapper"></div>;
     let haveRightWrapper = false;
 
     template.children = template.children || [];
+    leftWrapper.children = leftWrapper.children || [];
     rightWrapper.children = rightWrapper.children || [];
     components.forEach(compo => {
       if (compo === '->') {
@@ -101,15 +107,18 @@ export default {
       }
 
       if (!haveRightWrapper) {
-        template.children.push(TEMPLATE_MAP[compo]);
+        leftWrapper.children.push(TEMPLATE_MAP[compo]);
+        // template.children.push(TEMPLATE_MAP[compo]);
       } else {
         rightWrapper.children.push(TEMPLATE_MAP[compo]);
       }
     });
 
-    if (haveRightWrapper) {
-      template.children.unshift(rightWrapper);
-    }
+    template.children.push(leftWrapper);
+    template.children.push(rightWrapper);
+    // if (haveRightWrapper) {
+    //   template.children.unshift(rightWrapper);
+    // }
     console.log(template);
     return template;
   },

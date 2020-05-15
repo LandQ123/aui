@@ -1,0 +1,29 @@
+$--color-primary-background: #dddddd !default;
+.af-aside-main{
+  .af-tabs--border-card{
+    border-color: $--color-primary-background;
+  }
+  .af-tabs{
+    .af-tabs__item{
+      padding: 0 20px;
+      height: 30px;
+      line-height: 30px;
+    }
+  } 
+  .af-tabs--border-card>.af-tabs__header{
+    background-color:#f1f6fb;
+    border-bottom: 1px solid $--color-primary-background;
+  }
+  .af-tabs--border-card>.af-tabs__header .af-tabs__item{
+    color: #000000;
+  }
+  .af-tabs--border-card>.af-tabs__header .af-tabs__item.is-active{
+    border-left-color: $--color-primary-background;
+    border-right-color: $--color-primary-background;
+  }
+}
+
+// reset部分
+.af-container{
+  background-color: $--color-primary-background;
+}

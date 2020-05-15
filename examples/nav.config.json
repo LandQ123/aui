@@ -208,8 +208,8 @@
               "title": "Dropdown 下拉菜单--(待完成)"
             },
             {
-              "path": "/building",
-              "title": "Steps 步骤条--(待完成)"
+              "path": "/step",
+              "title": "Step"
             }
           ]
         },
@@ -255,7 +255,11 @@
             {
               "path": "/col-drag",
               "title": "col-drag 列自定义"
-            }
+						},
+						{
+							"path": "/combine-add-panel",
+							"title": "CombineAddPanel 添加面板"
+						}
           ]
         }
       ]
@@ -474,8 +478,8 @@
               "title": "Dropdown"
             },
             {
-              "path": "/steps",
-              "title": "Steps"
+              "path": "/step",
+              "title": "Step"
             }
           ]
         },

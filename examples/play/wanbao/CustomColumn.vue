@@ -6,9 +6,10 @@
           <pre>待添加：{{orginData}}</pre>
         </af-col>
         <af-col :span="12">
-          <af-col-drag 
-            :sourceList="sourceList" 
-            :maxLength="9" 
+          <af-col-drag
+            :sourceList="sourceList"
+            :maxLength="9"
+            :text="text"
             :sortedList="sortedList"
             @get-data="getData" >
           </af-col-drag>
@@ -82,7 +83,7 @@
         sortedList: [
             {
               id: 1,
-              label: '证券代码',
+              label: '申通代码',
               closable: false,
               textColor:{
                   color: '#aeaeae'
@@ -105,6 +106,10 @@
                 }
             },
         ],
+        text: {
+          name: '新增',
+          class: 'text'
+        },
         data: '',
         orginData: '',
       };
@@ -113,10 +118,13 @@
       getData(orginData, sortedData) {
         this.data = JSON.stringify(sortedData.map(item=>item.label))
         this.orginData = JSON.stringify(orginData.map(item=>item.label))
-      } 
+      }
     }
   };
 </script>
 <style lang="scss" scoped>
-  
+ >>> .text{
+   color: red;
+   font-size: 18px;
+ }
 </style>

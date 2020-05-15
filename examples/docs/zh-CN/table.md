@@ -795,6 +795,7 @@
     </af-table-column>
     <af-table-column
       fixed="right"
+      align="center"
       label="操作"
       width="100">
       <template slot-scope="scope">
@@ -1001,6 +1002,7 @@
     </af-table-column>
     <af-table-column
       fixed="right"
+      align="center"
       label="操作"
       width="120">
       <template slot-scope="scope">
@@ -1341,7 +1343,10 @@
     style="width: 100%"
     @selection-change="handleSelectionChange">
     <af-table-column
-      type="selection">
+      type="indexSelection"
+      width="60px"
+      label="序号"
+    >
     </af-table-column>
     <af-table-column
       label="日期"
@@ -1696,16 +1701,19 @@
           :row-class-name="tableRowClassName">
         <af-table-column
           prop="date"
+          align="center"
           label="日期"
           width="180">
         </af-table-column>
         <af-table-column
           prop="name"
+          align="center"
           label="姓名"
           width="180">
         </af-table-column>
         <af-table-column
           prop="address"
+          align="center"
           label="地址">
         </af-table-column>
       </af-table>
@@ -2218,7 +2226,7 @@
 ### Table-column Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| type | 对应列的类型。如果设置了 `selection` 则显示多选框；如果设置了 `index` 则显示该行的索引（从 1 开始计算）；如果设置了 `expand` 则显示为一个可展开的按钮 | string | selection/index/expand | — |
+| type | 对应列的类型。如果设置了 `selection` 则显示多选框；如果设置了 `index` 则显示该行的索引（从 1 开始计算）；如果设置了`indexSelect` 则显示含索引（从 1 开始计算）的多选框；如果设置了 `expand` 则显示为一个可展开的按钮 | string | selection/index/expand | — |
 | index | 如果设置了 `type=index`，可以通过传递 `index` 属性来自定义索引 | string, Function(index) | - | - |
 | column-key | column 的 key，如果需要使用 filter-change 事件，则需要此属性标识是哪个 column 的筛选条件 | string | — | — |
 | label | 显示的标题 | string | — | — |

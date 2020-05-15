@@ -1,5 +1,5 @@
 <template>
-  <section class="af-container" :class="{ 'is-vertical': isVertical }">
+  <section class="af-container" :class="{ 'is-vertical': isVertical, 'af-header-main': headerMain, 'af-aside-main': asideMain }">
     <slot></slot>
   </section>
 </template>
@@ -27,6 +27,36 @@
             return tag === 'af-header' || tag === 'af-footer';
           })
           : false;
+      },
+      headerMain() {
+        let flag = false;
+        if (this.$slots && this.$slots.default) {
+          let defaultVnodes = this.$slots.default;
+          let tagArr = defaultVnodes.map((item) => {
+            return item.componentOptions.tag;
+          });
+          if (defaultVnodes.length === 2) {
+            if (tagArr.indexOf('af-header') > -1 && tagArr.indexOf('af-main') > -1) {
+              flag = true;
+            }
+          }
+        }
+        return flag;
+      },
+      asideMain() {
+        let flag = false;
+        if (this.$slots && this.$slots.default) {
+          let defaultVnodes = this.$slots.default;
+          let tagArr = defaultVnodes.map((item) => {
+            return item.componentOptions.tag;
+          });
+          if (defaultVnodes.length === 2) {
+            if (tagArr.indexOf('af-aside') > -1 && tagArr.indexOf('af-main') > -1) {
+              flag = true;
+            }
+          }
+        }
+        return flag;
       }
     }
   };

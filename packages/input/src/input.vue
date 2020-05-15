@@ -9,17 +9,20 @@
       'af-input-group--append': $slots.append,
       'af-input-group--prepend': $slots.prepend,
       'af-input--prefix': $slots.prefix || prefixIcon,
-      'af-input--suffix': $slots.suffix || suffixIcon || clearable
+      'af-input--suffix': $slots.suffix || suffixIcon || clearable,
+      'af-alert-tip-border': alertTipsHover || alertTipsFocus,
+      'af-alert-tip-bg': alertTipsFocus
     }
     ]"
-    @mouseenter="hovering = true"
-    @mouseleave="hovering = false"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
   >
   <!-- 动态class具名插槽
       $slots.prepend: 前置插槽
       $slots.append: 后置插槽
       $slots.prefix： 前置icon插槽
       $slots.suffix： 后置icon插槽
+      $slots.preAlertIndex: 与alert配合使用的前置插槽
     不使用插槽的icon
       prefixIcon: 前置icon
       suffixIcon: 后置icon
@@ -30,6 +33,8 @@
       <div class="af-input-group__prepend" v-if="$slots.prepend">
         <slot name="prepend"></slot>
       </div>
+      <span v-if="alertTipsIndex >= 0" class="af-alert-tips-index">{{alertTipsIndex}}</span>
+      <slot name="preAlertIndex" v-if="$slots.preAlertIndex"></slot>
       <input
         :tabindex="tabindex"
         v-if="type !== 'textarea'"
@@ -86,28 +91,32 @@
         <slot name="append"></slot>
       </div>
     </template>
-    <textarea
-      v-else
-      :tabindex="tabindex"
-      class="af-textarea__inner"
-      :value="currentValue"
-      @compositionstart="handleComposition"
-      @compositionupdate="handleComposition"
-      @compositionend="handleComposition"
-      @input="handleInput"
-      ref="textarea"
-      v-bind="$attrs"
-      :disabled="inputDisabled"
-      :readonly="readonly"
-      :autocomplete="autoComplete || autocomplete"
-      :style="textareaStyle"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @change="handleChange"
-      :aria-label="label"
-      :maxlength="totalCount"
-    >
-    </textarea>
+    <template v-else>
+      <div class="af-input-group__prepend" v-if="$slots.prepend">
+        <slot name="prepend"></slot>
+      </div>
+      <textarea
+        :tabindex="tabindex"
+        class="af-textarea__inner"
+        :value="currentValue"
+        @compositionstart="handleComposition"
+        @compositionupdate="handleComposition"
+        @compositionend="handleComposition"
+        @input="handleInput"
+        ref="textarea"
+        v-bind="$attrs"
+        :disabled="inputDisabled"
+        :readonly="readonly"
+        :autocomplete="autoComplete || autocomplete"
+        :style="textareaStyle"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+        :aria-label="label"
+        :maxlength="totalCount"
+      >
+      </textarea>
+    </template>
     <div v-if="type === 'textarea' && restrict" class="af-textarea__restrict">
       <span>{{ remainCount }}/{{ totalCount }}</span>
     </div>
@@ -124,6 +133,7 @@
   // 实例属性$slots用来访问被插槽分发的内容
   // vm.$slots.foo 访问具名插槽foo
   // vm.$slots.default 没有被包含在具名插槽中的节点
+  import alertBus from '../../alert/alert-bus';
   import emitter from 'aui/src/mixins/emitter';
   import Migrating from 'aui/src/mixins/migrating';
   import calcTextareaHeight from './calcTextareaHeight';
@@ -159,7 +169,9 @@
         focused: false,
         isOnComposition: false,
         valueBeforeComposition: null,
-        remainCount: 0
+        alertTipsHover: false,
+        alertTipsFocus: false,
+        alertTipsIndex: -1
       };
     },
 
@@ -208,7 +220,11 @@
         type: Boolean,
         default: false
       },
-      totalCount: [String, Number]
+      totalCount: [String, Number],
+      alertTipRef: {
+        type: String,
+        default: ''
+      }
     },
 
     computed: {
@@ -249,6 +265,14 @@
           !this.readonly &&
           this.currentValue !== '' &&
           (this.focused || this.hovering);
+      },
+      remainCount: {
+        get() {
+          return this.currentValue.length;
+        },
+        set(val) {
+          console.log(val);
+        }
       }
     },
 
@@ -285,6 +309,15 @@
           // 向上找到ElFormItem组件发布el.form.blur事件并传值
           this.dispatch('AfFormItem', 'el.form.blur', [this.currentValue]);
         }
+
+        // link with af-alert
+        this.alertTipRef && alertBus.$emit('alerttips-up', {
+          type: 'blur', ref: this.alertTipRef
+        }, (resp, _, index) => {
+          this.alertTipsHover = resp;
+          this.alertTipsFocus = false;
+          this.alertTipsIndex = index;
+        });
       },
       select() {
         (this.$refs.input || this.$refs.textarea).select();
@@ -404,6 +437,31 @@
         this.$emit('clear'); // 触发父组件的@clear方法，让父组件知道自己已经清空了
         this.setCurrentValue(''); // 更新自己的currentValue为空
         this.focus(); // 让input获得焦点便于输入内容
+      },
+      handleMouseEnter() {
+        this.hovering = true;
+
+        this.alertTipRef && alertBus.$emit('alerttips-up', {
+          type: 'mouseover', ref: this.alertTipRef
+        }, resp => {
+          this.alertTipsHover = resp;
+          this.alertTipsFocus = resp;
+          this.alertTipsIndex = -1;
+        });
+      },
+
+      handleMouseLeave() {
+        this.hovering = false;
+
+        this.alertTipRef && alertBus.$emit('alerttips-up', {
+          type: 'mouseout',
+          ref: this.alertTipRef,
+          isFocus: this.focused
+        }, (resp, isCurrent, index) => {
+          this.alertTipsHover = resp;
+          this.alertTipsFocus = isCurrent;
+          this.alertTipsIndex = !this.focused ? index : -1;
+        });
       }
     },
 
@@ -413,10 +471,29 @@
     },
 
     mounted() {
+      let $this = this;
+  
       // 动态文本域（高度）
       this.resizeTextarea();
       // 前置后置元素偏移（样式）
       this.updateIconOffset();
+
+      this.$nextTick(_ => {
+        $this.alertTipRef && alertBus.$on('alerttips-down', ({type, ref}) => {
+          if (ref === $this.alertTipRef) {
+            $this.alertTipsHover = type === 'mouseover' || $this.alertTipsHover;
+            $this.alertTipsFocus = type === 'mouseover';
+          }
+        });
+
+        $this.alertTipRef && alertBus.$emit('alerttips-up', {
+          type: 'initStatus', ref: $this.alertTipRef
+        }, (resp, _, index) => {
+          $this.alertTipsHover = resp;
+          $this.alertTipsFocus = false;
+          $this.alertTipsIndex = index;
+        });
+      });
     },
 
     updated() {

@@ -76,7 +76,8 @@
   import Locale from 'aui/src/mixins/locale';
   import AfButton from 'aui/packages/button';
   import Dialog from 'aui/src/utils/aria-dialog';
-
+  import { drag } from 'aui/packages/drag/src/directive.js';
+  
   let messageBox;
   let typeMap = {
     success: 'success',
@@ -88,7 +89,9 @@
 
   export default {
     mixins: [Popup, Locale],
-
+    directives: {
+      drag
+    },
     props: {
       modal: {
         default: true
@@ -227,6 +230,12 @@
       if (this.closeOnHashChange) {
         window.removeEventListener('hashchange', this.close);
       }
+      setTimeout(() => {
+        messageBox.closeDialog();
+      });
+    },
+
+    beforeRouteLeave(to, from, next) {
       setTimeout(() => {
         messageBox.closeDialog();
       });

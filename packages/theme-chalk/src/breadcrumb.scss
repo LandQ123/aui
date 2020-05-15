@@ -25,7 +25,7 @@
     float: left;
 
     @include e(inner) {
-      color: $--color-text-regular;
+      color: $--color-text-label;
 
       &.is-link, & a {
         font-weight: bold;
@@ -45,7 +45,7 @@
       .af-breadcrumb__inner a {
         &, &:hover {
           font-weight: normal;
-          color: $--color-text-regular;
+          color: $--color-text-label;
           cursor: text;
         }
       }

@@ -15,6 +15,24 @@
   font-size: 12px;
   color: $--color-text-black;
 
+  //表格多选框的大小为12x12
+  .af-checkbox__inner{
+    width: 12px;
+    height: 12px;
+
+    &::after {
+      height: 6px;
+      left: 4px;
+      top: 1px;
+      width: 2px;
+    }
+  }
+
+  .af-checkbox__input.is-indeterminate .af-checkbox__inner:before{
+    top: 4px
+  }
+
+
   // 数据为空
   @include e(empty-block) {
     min-height: 60px;
@@ -63,7 +81,7 @@
 
   // 展开cell
   @include e(expanded-cell) {
-    background-color: $--color-white;
+    background-color: $--color-transparent;
 
     // 纯属为了增加权重
     &[class*=cell] {
@@ -71,8 +89,29 @@
     }
 
     &:hover {
-      background-color: transparent !important;
+      background-color: $--color-transparent !important;
     }
+
+    // 表格嵌套表格的样式
+    .af-table,
+    .af-table th,
+    .af-table tr,
+    .af-table td,
+    .af-table .warning-row ,
+    .af-table .success-row,
+    .af-table--striped .af-table__body tr.af-table__row--striped td
+    {
+      background: $--color-transparent;
+    }
+
+    .af-table td, .af-table th.is-leaf {
+      border-bottom: none;
+    }
+
+    .af-table--border:after, .af-table--group:after, .af-table:before{
+      background: $--color-transparent;
+    }
+
   }
 
   @include m(fit) {
@@ -87,6 +126,7 @@
   // 滚动条x
   @include m(scrollable-x) {
     .af-table__body-wrapper {
+      @include scroll-bar;
       overflow-x: auto;
     }
   }
@@ -94,6 +134,7 @@
   // 滚动条y
   @include m(scrollable-y) {
     .af-table__body-wrapper {
+      @include scroll-bar;
       overflow-y: auto;
     }
   }
@@ -142,14 +183,14 @@
 
   @include m(medium) {
     th, td {
-      padding: 10px 0;
+      padding: 0px 0;
     }
   }
 
   @include m(small) {
     font-size: 12px;
     th, td {
-      padding: 8px 0;
+      padding: 0px 0;
     }
   }
 
@@ -183,6 +224,7 @@
     user-select: none;
     background-color: $--table-header-background;
     border-right: 1px solid #fff;
+    font-weight: normal;
 
     div {
       display: inline-block;
@@ -203,6 +245,10 @@
       vertical-align: middle;
       width: 100%;
       box-sizing: border-box;
+
+      .af-checkbox__label {
+        color: $--table-header-color;
+      }
 
       &.highlight {
         color: $--color-primary;
@@ -398,9 +444,14 @@
     overflow: hidden;
 
     & tbody td {
-      background-color: $--table-row-hover-background;
-      color: $--table-text-color;
+      background-color: $--table-footer-background;
+      color: $--table-footer-text-color;
     }
+
+    td:first-child .cell{
+      color: $--table-footer-first-td-text-color;
+    }
+
   }
 
   @include e(body-wrapper) {

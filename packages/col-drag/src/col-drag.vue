@@ -13,7 +13,7 @@
         <span class="title">已添加</span><span class="tip">(拖拽调整顺序，点击x删除)</span><span v-if="showTip" class="notice">最多{{maxLength}}列</span>
         <draggable v-model="afterList" class="drag-area" element="div"  :options="dragOptions" @end="onEnd">
           <transition-group tag="div">
-            <af-tag v-for="(item,index ) in afterList" :key="index" disable-transitions color="#fff" :class="item.closable ? 'item-drag':'item-disabled-drag'" :style="item.textColor"
+            <af-tag v-for="(item,index ) in afterList" :key="index" disable-transitions color="#fff" :class="item.sortable ? 'item-drag':'item-disabled-drag'" :style="item.textColor"
                 >{{index+1}}、{{ item.label }}
                  <slot v-if="item.closable">
                    <i class="af-icon-close" @click="removeTag(item,index)"></i>
@@ -35,7 +35,7 @@
         <af-button  @click="show=false">取消</af-button>
       </div>
     </div>
-    <af-button slot="reference">设置</af-button>
+    <af-button slot="reference" :class="text.class">{{text.name}}</af-button>
   </af-popover>
 </template>
 
@@ -50,8 +50,8 @@ export default {
     return {
       show: false,
       showTip: false,
-      afterList: this.sortedList,
-      beforeList: this.sourceList,
+      afterList: [...this.sortedList],
+      beforeList: [...this.sourceList],
       isDragging: false,
       delayedDragging: false,
       dragOptions: {
@@ -79,16 +79,26 @@ export default {
     },
     maxLength: {
       type: Number
+    },
+    text: {
+      type: Object,
+      default() {
+        return {
+          name: '设置',
+          class: ''
+        };
+      }
     }
   },
   mounted() {
-    this.ensure();
+    // this.ensure();
   },
   methods: {
     onEnd() {
       let afterList = this.afterList;
-      let first = afterList.findIndex(item => item.label === '证券代码');
-      let last = afterList.findIndex(item => item.label === '操作');
+      let first = afterList.findIndex(item => !item.closable && item.label !== '操作');
+      let lastIndex = afterList.findIndex(item => item.label === '操作');
+      let last = lastIndex < 0 ? afterList.length - 1 : lastIndex;
       let firstItem = afterList[first];
       let lastItem = afterList[last];
       afterList.splice(first, 1);
@@ -98,8 +108,8 @@ export default {
       this.afterList = afterList;
     },
     resetTag() {
-      this.afterList = this.sortedList;
-      this.beforeList = this.sourceList;
+      this.afterList = [...this.sortedList];
+      this.beforeList = [...this.sourceList];
     },
     removeTag(item, index) {
       this.afterList.splice(index, 1);
@@ -113,7 +123,7 @@ export default {
     },
     ensure() {
       this.show = !this.show;
-      this.$emit('get-data', this.beforeList, this.afterList);
+      this.$emit('get-data', [...this.beforeList], [...this.afterList]);
     }
   },
   watch: {

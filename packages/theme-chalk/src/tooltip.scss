@@ -8,12 +8,23 @@
   @include e(popper) {
     position: absolute;
     border-radius: 4px;
-    padding: $--tooltip-padding;
     z-index: $--index-popper;
-    font-size: $--tooltip-font-size;
-    line-height: 1.2;
-    min-width: 10px;
     border: 1px solid $--tooltip-border-color;
+
+    .popper__content {
+      padding: $--tooltip-padding;
+      font-size: $--tooltip-font-size;
+      line-height: 1.2;
+      min-width: 10px;
+      max-width: 900px;
+      max-height: 45vh;
+      display: block;
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
 
     .popper__arrow,
     .popper__arrow::after {

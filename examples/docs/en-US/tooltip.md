@@ -173,7 +173,7 @@ Tooltip has two themes: `dark` and `light`。
 
 Display multiple lines of text and set their format.
 
-:::demo Override attribute `content` of `el-tooltip` by adding a slot named `content`.
+:::demo Override attribute `content` of `af-tooltip` by adding a slot named `content`.
 ```html
 <af-tooltip placement="top">
   <div slot="content">multiple lines<br/>second line</div>

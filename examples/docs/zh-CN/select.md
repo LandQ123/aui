@@ -129,7 +129,7 @@
 
 <style>
   .demo-select .af-select {
-    width: 160px;
+    width: 266px;
   }
 </style>
 
@@ -323,20 +323,10 @@
 :::demo 为`af-select`设置`multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。默认情况下选中值会以 Tag 的形式展现，你也可以设置`collapse-tags`属性将它们合并为一段文字。
 ```html
 <template>
-  <!-- <af-select v-model="value5" multiple placeholder="请选择">
-    <af-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </af-option>
-  </af-select> -->
-
   <af-select
-    v-model="value11"
+    v-model="value5"
     multiple
     collapse-tags
-    style="margin-left: 20px;"
     placeholder="请选择">
     <af-option
       v-for="item in options"
@@ -367,8 +357,7 @@
           value: '选项5',
           label: '烤鸭'
         }],
-        value5: [],
-        value11: []
+        value5: []
       }
     }
   }
@@ -654,6 +643,49 @@
 如果 Select 的绑定值为对象类型，请务必指定 `value-key` 作为它的唯一性标识。
 :::
 
+### 设置标签
+
+可以设置前置内容标签
+:::demo 使用`label`属性可以设置前置内容。
+```html
+<template>
+  <af-select
+    v-model="value11"
+    placeholder="请选择文章标签"
+    label="文章标签：" 
+  >
+    <af-option
+      v-for="(item, index) in options5"
+      :key="index"
+      :label="item.label"
+      :value="item.value">
+    </af-option>
+  </af-select>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        options5: [{
+          value: 'HTML',
+          label: 'HTML'
+        }, {
+          value: 'CSS',
+          label: 'CSS'
+        }, {
+          value: 'JavaScript',
+          label: 'JavaScript'
+        }],
+        value11: ''
+      }
+    }
+  }
+</script>
+```
+:::
+
+
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -669,7 +701,7 @@
 | filterable | 是否可搜索 | boolean | — | false |
 | allow-create | 是否允许用户创建新条目，需配合 `filterable` 使用 | boolean | — | false |
 | filter-method | 自定义搜索方法 | function | — | — |
- remote | 是否为远程搜索 | boolean | — | false |
+| remote | 是否为远程搜索 | boolean | — | false |
 | remote-method | 远程搜索方法 | function | — | — |
 | loading | 是否正在从远程获取数据 | boolean | — | false |
 | loading-text | 远程加载时显示的文字 | string | — | 加载中 |
@@ -680,6 +712,7 @@
 | default-first-option | 在输入框按下回车，选择第一个匹配项。需配合 `filterable` 或 `remote` 使用 | boolean | - | false |
 | popper-append-to-body | 是否将弹出框插入至 body 元素。在弹出框的定位出现问题时，可将该属性设置为 false | boolean | - | true |
 | automatic-dropdown | 对于不可搜索的 Select，是否在输入框获得焦点后自动弹出选项菜单 | boolean | - | false |
+| label | 设置前置内容标签 | string | - | - |
 
 ### Select Events
 | 事件名称 | 说明 | 回调参数 |

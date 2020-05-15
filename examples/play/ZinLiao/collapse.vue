@@ -91,23 +91,59 @@
       </af-collapse>
     </div>
     <div class="box">
-      <p>按比例占满指定高度(height=500, scale=[1,2,3])</p>
-      <div style="height:500px;background-color:#d1f0ff;">
+      <af-input type="text" placeholder="请输入高度" style="width: 200px;" v-model="heightInput"></af-input>
+      <af-button type="priamry" size="small" @click="changeHeight">改变height</af-button>
+      <p>按比例占满指定高度(height=500, scale=[1,2,3], scale-Num=2)</p>
+      <div style="background-color:#d1f0ff;" :style="`height:${height}px;`">
         <af-collapse 
           v-model="activeNames4" 
           @change="handleChange" 
           type="primary"
-          :height=500
-          :scale=[1,2,3]>
-          <af-collapse-item title="该面板占 1 份" name="1">
-            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-            <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+          :height=height
+          :scale=scale
+          :scaleNum=scaleNum
+          :scaleDebounce=scaleDebounce>
+          <af-collapse-item title="该面板占 1 份" name="a">
+            <div style="height: 100%;">
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+              <p>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</p>
+            </div>
           </af-collapse-item>
-          <af-collapse-item title="该面板占 2 份" name="2">
+          <af-collapse-item title="该面板占 2 份" name="b">
             <div>简化流程：设计简洁直观的操作流程；</div>
             <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
           </af-collapse-item>
-          <af-collapse-item title="该面板占 3 份" name="3">
+          <af-collapse-item title="该面板占 3 份" name="c">
             <div>简化流程：设计简洁直观的操作流程；</div>
             <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
           </af-collapse-item>
@@ -124,15 +160,27 @@ export default {
       activeNames1: ['1'],
       activeNames2: ['4'],
       activeNames3: [],
-      activeNames4: []
+      activeNames4: [],
+      scale: {
+        "a": 1,
+        "b": 2,
+        "c": 3
+      },
+      scaleNum: 2,
+      scaleDebounce: 500,
+      height: 500,
+      heightInput: 0
     };
   },
   methods: {
     handleChange(val) {
-      console.log(val);
     },
     handleAlert(str) {
       alert(str)
+    },
+    changeHeight() {
+      this.heightInput = Math.random() * 1000;
+      this.height = this.heightInput;
     }
   }
 }

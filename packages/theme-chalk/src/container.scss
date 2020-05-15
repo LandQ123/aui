@@ -1,14 +1,35 @@
-@import "mixins/mixins";
-
+@import 'mixins/mixins';
 @include b(container) {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  flex-basis: auto;
-  box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+	flex-basis: auto;
+	box-sizing: border-box;
   min-width: 0;
-
-  @include when(vertical) {
+  margin: 0 8px 8px 8px;
+	@include when(vertical) {
     flex-direction: column;
+    @include b(container){
+      margin: 0;
+      @include b(aside){
+        margin: 0;
+      }
+    }
+  }
+  @include b(container){
+    margin: 0;
+  }
+  @include b(header-main) {
+    margin-left: 4px;
+  }
+}
+@include b(header-main) {
+  @include b(header) {
+    margin-bottom: 4px;
+  }
+}
+@include b(aside-main) {
+  @include b(aside) {
+    margin-right: 4px;
   }
 }

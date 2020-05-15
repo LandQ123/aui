@@ -15,7 +15,6 @@ describe('Message', () => {
 
   it('automatically close', done => {
     Message({
-      onDefault: false,
       message: '灰风',
       duration: 500
     });
@@ -43,9 +42,9 @@ describe('Message', () => {
 
   it('custom icon', done => {
     Message({
-      onDefault: false,
       message: '夏天',
-      iconClass: 'af-icon-close'
+      iconClass: 'af-icon-close',
+      duration: 1000
     });
     setTimeout(() => {
       const icon = document.querySelector('.af-message .af-message__status');
@@ -57,7 +56,8 @@ describe('Message', () => {
   it('html string', () => {
     Message({
       message: '<strong>夏天</strong>',
-      dangerouslyUseHTMLString: true
+      dangerouslyUseHTMLString: true,
+      duration: 1000
     });
     const message = document.querySelector('.af-message strong');
     expect(message.textContent).to.equal('夏天');
@@ -65,12 +65,10 @@ describe('Message', () => {
 
   it('close all', done => {
     Message({
-      onDefault: false,
       message: '夏天',
       duration: 0
     });
     Message({
-      onDefault: false,
       message: '淑女',
       duration: 0
     });
@@ -83,19 +81,18 @@ describe('Message', () => {
     }, 500);
   });
 
+  it('invoke with type', () => {
+    Message.success('毛毛狗');
+    expect(document.querySelector('.af-message__wrapper').__vue__.type).to.equal('success');
+  });
+
   it('create', () => {
     Message('娜梅莉亚');
     expect(document.querySelector('.af-message')).to.exist;
   });
 
-  it('invoke with type', () => {
-    Message.success('毛毛狗');
-    expect(document.querySelector('.af-message').__vue__.type).to.equal('success');
-  });
-
   it('reset timer', done => {
     Message({
-      onDefault: false,
       message: '白灵',
       duration: 1000
     });

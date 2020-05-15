@@ -323,7 +323,7 @@
         console.log(val);
       },
       onClear(){
-        console.log('clear');          
+        console.log('clear');
       },
       visibleChange() {
         console.log('select-visibleChange');
@@ -359,7 +359,8 @@
             region:'main',
             attrs: {
               size: "icon",
-              icon: 'af-icon-upload'
+              icon: 'af-icon-upload',
+              hasPermission: false
             }
           },
           {
@@ -412,56 +413,56 @@
               'visible-change': this.visibleChange
             }
           },
-          {
-            key: 'input-1',
-            xType:'x-input',
-            region:'main',
-            value:'1234',
-            attrs:{},
-            events: {
-              blur: this.onBlur,
-              change: this.onChange,
-              clear: this.onClear,
-              input: val => console.log(val)
-            }
-          },
-          {
-            key: 'time-picker-0',
-            xType:'x-time-picker',
-            region:'main',
-            value: new Date(2016, 9, 10, 18, 40),
-            attrs:{
-              size: 'mini',
-              clearable: true,
-              placeholder: '任意时间点',
-              'prefix-icon': 'af-icon-search',
-              'arrow-control': true,
-              'picker-options': {
-                selectableRange: '18:30:00 - 20:30:00'
-              }
-            },
-            events: {
-              blur: this.onBlur,
-              change: this.onChange
-            }
-          },
-          {
-            key: 'x-cascader-0',
-            xType:'x-cascader',
-            region:'main',
-            value: [],
-            options: cascaderOptions,
-            attrs:{
-              clearable: true,
-              placeholder: '级联选择器',
-              // options: cascaderOptions
-            },
-            events: {
-              blur: this.onBlur,
-              change: this.onChange,
-              'active-item-change': this.activeItemChange
-            }
-          },
+          // {
+          //   key: 'input-1',
+          //   xType:'x-input',
+          //   region:'main',
+          //   value:'1234',
+          //   attrs:{},
+          //   events: {
+          //     blur: this.onBlur,
+          //     change: this.onChange,
+          //     clear: this.onClear,
+          //     input: val => console.log(val)
+          //   }
+          // },
+          // {
+          //   key: 'time-picker-0',
+          //   xType:'x-time-picker',
+          //   region:'main',
+          //   value: new Date(2016, 9, 10, 18, 40),
+          //   attrs:{
+          //     size: 'mini',
+          //     clearable: true,
+          //     placeholder: '任意时间点',
+          //     'prefix-icon': 'af-icon-search',
+          //     'arrow-control': true,
+          //     'picker-options': {
+          //       selectableRange: '18:30:00 - 20:30:00'
+          //     }
+          //   },
+          //   events: {
+          //     blur: this.onBlur,
+          //     change: this.onChange
+          //   }
+          // },
+          // {
+          //   key: 'x-cascader-0',
+          //   xType:'x-cascader',
+          //   region:'main',
+          //   value: [],
+          //   options: cascaderOptions,
+          //   attrs:{
+          //     clearable: true,
+          //     placeholder: '级联选择器',
+          //     // options: cascaderOptions
+          //   },
+          //   events: {
+          //     blur: this.onBlur,
+          //     change: this.onChange,
+          //     'active-item-change': this.activeItemChange
+          //   }
+          // },
           {
             key: 'date-picker-0',
             xType:'x-date-picker',
@@ -519,6 +520,7 @@
             attrs:{
               clearable: true,
               placeholder: '级联选择器',
+              width: '120px'
               // options: cascaderOptions
             },
             events: {
@@ -528,7 +530,26 @@
             }
           },
           {
-            key: 'x-checkbox-0',
+            key: 'x-checkbox-group-0',
+            region: 'option',
+            xType:'x-checkbox-group',
+            options: [{
+              label: '阿斯钢'
+            },{
+              label: 'agas'
+            },{
+              label: '嘎嘎'
+            },{
+              label: '俺啥时候'
+            }],
+            value: [],
+            text: '选项1',
+            attrs: {
+              max: 2
+            }
+          },
+          {
+            key: 'x-checkbox0',
             region: 'option',
             xType:'x-checkbox',
             value: false,

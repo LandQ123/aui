@@ -1,7 +1,7 @@
 import {createTest, createVue, destroyVM} from '../../../test/unit/util';
 import Transfer from 'packages/transfer-tree';
 
-describe('Transfer', () => {
+describe('TransferTree', () => {
   let vm;
   const getTestData = () => {
     const data = [{
@@ -39,9 +39,11 @@ describe('Transfer', () => {
       children: [{
         id: 10,
         label: '二级 3-1',
+        disabled: true,
         children: [{
           id: 11,
-          label: '三级 3-1-1'
+          label: '三级 3-1-1',
+          disabled: true
         }]
       }, {
         id: 12,
@@ -118,7 +120,7 @@ describe('Transfer', () => {
       data() {
         return {
           value: [],
-          defaultValue: '6'
+          defaultValue: '11'
         };
       }
     });
@@ -128,12 +130,12 @@ describe('Transfer', () => {
     setTimeout(_ => {
       const leftFirst = leftPanel.$el.querySelector('.af-transfer-panel__list .af-tree-node');
       const rightFirst = rightPanel.$el.querySelector('.af-transfer-panel__list .af-transfer-panel__button');
-      leftFirst.click();
+      rightFirst.click();
       setTimeout(_ => {
-        expect(transfer.targetData.length).to.equal(2);
-        rightFirst.click();
+        expect(transfer.targetData.length).to.equal(1);
+        leftFirst.click();
         setTimeout(_ => {
-          expect(transfer.targetData.length).to.equal(1);
+          expect(transfer.targetData.length).to.equal(2);
           done();
         }, 50);
       }, 50);
@@ -175,7 +177,7 @@ describe('Transfer', () => {
     setTimeout(() => {
       addAllToRight.click();
       setTimeout(() => {
-        expect(transfer.value.length).to.equal(5);
+        expect(transfer.value.length).to.equal(4);
         addAllToLeft.click();
         setTimeout(() => {
           expect(transfer.value.length).to.equal(0);

@@ -1087,29 +1087,11 @@
 </script>
 
 <style>
-  .af-table .warning-row {
-    background: oldlace;
-  }
 
-  .af-table .success-row {
-    background: #f0f9eb;
-  }
+  .demo-table-query{
+    background: #ddd;
+  }  
 
-  .demo-table .name-wrapper {
-    display: inline-block;
-  }
-
-  .demo-table .demo-table-expand {
-    label {
-      width: 90px;
-      color: #99a9bf;
-    }
-    .af-form-item {
-      margin-right: 0;
-      margin-bottom: 0;
-      width: 50%;
-    }
-  }
 </style>
 
 ## TableQuery 查询表格

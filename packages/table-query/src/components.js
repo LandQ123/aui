@@ -11,6 +11,9 @@ import AfDatePicker from 'aui/packages/date-picker';
 import AfCascader from 'aui/packages/cascader';
 import AfButton from 'aui/packages/button';
 import AfCheckbox from 'aui/packages/checkbox';
+import AfCheckboxGroup from 'aui/packages/checkbox-group';
+import AfCheckboxButton from 'aui/packages/checkbox-button';
+
 // import AfRadio from 'aui/packages/radio';
 import AfInputNumber from 'aui/packages/input-number';
 import AfDivider from 'aui/packages/divider';
@@ -165,12 +168,15 @@ const componentsAA = {
       const renderProxy = self._renderProxy;
       const {attrs = {}, events = {}, slots = {}, text = ''} = self.field;
 
+      let _attrs = Object.assign({}, {hasPermission: true}, attrs);
+
       let Props = {
-        props: attrs,
+        props: _attrs,
         on: Object.assign({}, events)
       };
 
       return (
+        _attrs.hasPermission &&
         <AfButton {...Props}>
           {
             slots.default
@@ -207,6 +213,56 @@ const componentsAA = {
       const {attrs = {}, events = {}} = self.field;
       const Props = genProps(self, attrs, events);
       return (<AfInputNumber value={self.field.value} {...Props}></AfInputNumber>);
+    }
+  },
+
+  'x-checkbox-group': {
+    mixins: [mixins],
+    render(h) {
+      const self = this;
+      const renderProxy = self._renderProxy;
+      const {attrs = {}, events = {}, slots = {}, options} = self.field;
+      const Props = genProps(self, attrs, events);
+      const isButton = self.field.isButton || false;
+      //  渲染checkbox
+      const renderCheckbox = data => {
+        return self._l(data, option => {
+          return (
+            <AfCheckbox
+              key={option.value ? option.value : option.label ? option.label : option.text}
+              label={option.label ? option.label : option.text}
+              disabled={option.disabled ? option.disabled : false}
+            >
+              {option.label ? option.label : option.text ? option.text : option.value}
+            </AfCheckbox>
+          );
+        });
+      };
+      const renderCheckboxButton = data => {
+        return self._l(data, option => {
+          return (
+            <AfCheckboxButton
+              key={option.value ? option.value : option.label ? option.label : option.text}
+              label={option.label ? option.label : option.text}
+              disabled={option.disabled ? option.disabled : false}
+            >
+              {option.label ? option.label : option.text ? option.text : option.value}
+            </AfCheckboxButton>
+          );
+        });
+      };
+
+      return (
+        <AfCheckboxGroup value={self.field.value}{...Props}>
+          {
+            slots.default
+              ? slots.default.call(renderProxy, h)
+              : isButton
+                ? renderCheckboxButton(options)
+                : renderCheckbox(options)
+          }
+        </AfCheckboxGroup>
+      );
     }
   },
 
@@ -253,6 +309,7 @@ export default {
       'x-cascader': <x-cascader field={this.field} />,
       'x-button': <x-button field={this.field} />,
       'x-checkbox': <x-checkbox field={this.field} />,
+      'x-checkbox-group': <x-checkbox-group field={this.field} />,
       'x-input-number': <x-input-number field={this.field} />,
       'x-divider': <x-divider field={this.field} />
     };

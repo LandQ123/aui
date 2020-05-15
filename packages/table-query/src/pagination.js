@@ -22,7 +22,6 @@ export default {
     return (
       <AfPaginationBase
         small={attrs.small || true}
-        layout={attrs.layout || 'total, ->, sizes, prev, pager, next'}
         {...Props}
         // currentPage={1}
         // pageSizes={[10, 20, 30, 40]}

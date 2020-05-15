@@ -1,4 +1,4 @@
-import { createVue, destroyVM, triggerKeyDown } from '../util';
+import { createVue, destroyVM, triggerKeyDown } from '../../../test/unit/util';
 
 describe('Radio', () => {
   let vm;

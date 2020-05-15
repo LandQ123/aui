@@ -1,13 +1,17 @@
 import Vue from 'vue';
 
-let scrollBarWidth;
+let scrollBarWidth = {};
 
-export default function() {
+// scrollbarType ：default - 浏览器默认类型 ,  mini - 自定义hack类型
+export default function(scrollbarType = 'default') {
   if (Vue.prototype.$isServer) return 0; // 服务器端直接返回
-  if (scrollBarWidth !== undefined) return scrollBarWidth; // 如果已经计算过就直接返回之前的
+  if (scrollBarWidth[scrollbarType] !== undefined) return scrollBarWidth[scrollbarType]; // 如果已经计算过就直接返回之前的
+
+  let className = 'af-scrollbar__wrap'; // scrollbarType === 'default' 同样会加入overflow: scroll
+  if (scrollbarType === 'mini') className = 'af-scrollbar__wrap af-scrollbar__style';
 
   const outer = document.createElement('div'); // 创建外部的容器
-  outer.className = 'af-scrollbar__wrap'; // 同样会加入overflow: scroll
+  outer.className = className;
   outer.style.visibility = 'hidden'; // 不可见
   outer.style.width = '100px'; // 设置一个宽度
   outer.style.position = 'absolute'; // 绝对定位
@@ -23,7 +27,7 @@ export default function() {
 
   const widthWithScroll = inner.offsetWidth; // 内部宽度
   outer.parentNode.removeChild(outer); // 移除
-  scrollBarWidth = widthNoScroll - widthWithScroll;// 滚动条宽度
+  scrollBarWidth[scrollbarType] = widthNoScroll - widthWithScroll;// 滚动条宽度
 
-  return scrollBarWidth;
+  return scrollBarWidth[scrollbarType];
 };

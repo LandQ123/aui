@@ -1,14 +1,23 @@
 <template>
   <div
     class="af-select"
-    :class="[selectSize ? 'af-select--' + selectSize : '']"
+    :class="[
+      selectSize ? 'af-select--' + selectSize : '', 
+      disabled ? 'is-disabled' : '',
+      {
+        'af-alert-tip-border': alertTipsHover || alertTipsFocus,
+        'af-alert-tip-bg': alertTipsFocus
+      }
+    ]"
     @click.stop="toggleMenu"
     v-clickoutside="handleClose">
+    <span v-if="alertTipsIndex >= 0" class="af-alert-tips-index">{{alertTipsIndex}}</span>
     <div
       class="af-select__tags"
       v-if="multiple"
       ref="tags"
       :style="{ 'max-width': inputWidth - 32 + 'px' }">
+      <div class="af-input__hidden-label" v-if="label">{{label}}</div>
       <span v-if="collapseTags && selected.length">
         <af-tag
           :closable="!selectDisabled"
@@ -89,8 +98,12 @@
       @keydown.native.esc.stop.prevent="visible = false"
       @keydown.native.tab="visible = false"
       @paste.native="debouncedOnInputChange"
-      @mouseenter.native="inputHovering = true"
-      @mouseleave.native="inputHovering = false">
+      @mouseenter.native="handleMouseEnter"
+      @mouseleave.native="handleMouseLeave">
+      <!-- @mouseenter.native="" -->
+      <template slot="prepend" v-if="label">
+        <span>{{label}}</span>
+      </template>
       <template slot="prefix" v-if="$slots.prefix">
         <slot name="prefix"></slot>
       </template>
@@ -114,7 +127,7 @@
           ref="scrollbar"
           :class="{ 'is-empty': !allowCreate && query && filteredOptionsCount === 0 }"
           v-show="options.length > 0 && !loading">
-          <div class="af-tip"><span v-if="currentPlaceholder === ''">请选择</span><span v-else>{{ currentPlaceholder }}</span></div>
+          <div class="af-tip"><span v-if="placeholder === ''">请选择</span><span v-else>{{ placeholder }}</span></div>
           <af-option
             :value="query"
             created
@@ -134,6 +147,7 @@
 </template>
 
 <script type="text/babel">
+  import alertBus from '../../alert/alert-bus';
   import Emitter from 'aui/src/mixins/emitter';
   import Focus from 'aui/src/mixins/focus';
   import Locale from 'aui/src/mixins/locale';
@@ -254,7 +268,8 @@
       name: String,
       id: String,
       value: {
-        required: true
+        required: true,
+        default: ''
       },
       autocomplete: {
         type: String,
@@ -304,6 +319,11 @@
       popperAppendToBody: {
         type: Boolean,
         default: true
+      },
+      label: String,
+      alertTipRef: {
+        type: String,
+        default: ''
       }
     },
 
@@ -330,7 +350,10 @@
         currentPlaceholder: '',
         menuVisibleOnFocus: false,
         isOnComposition: false,
-        isSilentBlur: false
+        isSilentBlur: false,
+        alertTipsHover: false,
+        alertTipsFocus: false,
+        alertTipsIndex: -1
       };
     },
 
@@ -413,6 +436,16 @@
           }
         }
         this.$emit('visible-change', val);
+
+        this.alertTipRef && alertBus.$emit('alerttips-up', {
+          type: 'mouseout',
+          ref: this.alertTipRef,
+          isFocus: this.visible
+        }, (resp, isCurrent, index) => {
+          this.alertTipsHover = resp;
+          this.alertTipsFocus = isCurrent;
+          this.alertTipsIndex = !this.visible ? index : -1;
+        });
       },
 
       options() {
@@ -639,7 +672,8 @@
           input.style.height = this.selected.length === 0
             ? sizeInMap + 'px'
             : Math.max(
-              tags ? (tags.clientHeight + (tags.clientHeight > sizeInMap ? 6 : 0)) : 0,
+              // tags ? (tags.clientHeight + (tags.clientHeight > sizeInMap ? 6 : 0)) : 0,
+              tags ? (tags.clientHeight + (tags.clientHeight > sizeInMap ? 0 : 0)) : 0,
               sizeInMap
             ) + 'px';
           if (this.visible && this.emptyText !== false) {
@@ -821,6 +855,30 @@
         } else {
           return getValueByPath(item.value, this.valueKey);
         }
+      },
+
+      handleMouseEnter() {
+        this.inputHovering = true;
+        this.alertTipRef && alertBus.$emit('alerttips-up', {
+          type: 'mouseover', ref: this.alertTipRef
+        }, resp => {
+          this.alertTipsHover = resp;
+          this.alertTipsFocus = resp;
+          this.alertTipsIndex = -1;
+        });
+      },
+
+      handleMouseLeave() {
+        this.inputHovering = false;
+        this.alertTipRef && alertBus.$emit('alerttips-up', {
+          type: 'mouseout',
+          ref: this.alertTipRef,
+          isFocus: this.visible
+        }, (resp, isCurrent, index) => {
+          this.alertTipsHover = resp;
+          this.alertTipsFocus = isCurrent;
+          this.alertTipsIndex = !this.visible ? index : -1;
+        });
       }
     },
 
@@ -864,6 +922,27 @@
         }
       });
       this.setSelected();
+
+      // link with alert
+      let $this = this;
+      this.$nextTick(_ => {
+        alertBus.$on('alerttips-down', ({type, ref}) => {
+          if (ref === $this.alertTipRef) {
+            $this.alertTipsHover = type === 'mouseover' || $this.alertTipsHover;
+            $this.alertTipsFocus = type === 'mouseover';
+          }
+        });
+
+        if (this.alertTipRef) {
+          alertBus.$emit('alerttips-up', {
+            type: 'initStatus', ref: this.alertTipRef
+          }, (resp, _, index) => {
+            this.alertTipsHover = resp;
+            this.alertTipsFocus = false;
+            this.alertTipsIndex = index;
+          });
+        }
+      });
     },
 
     beforeDestroy() {

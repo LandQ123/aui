@@ -9,14 +9,17 @@
       cascaderSize ? 'af-cascader--' + cascaderSize : ''
     ]"
     @click="handleClick"
-    @mouseenter="inputHover = true"
+    @mouseenter="handleMouseEnter"
     @focus="inputHover = true"
-    @mouseleave="inputHover = false"
+    @mouseleave="handleMouseLeave"
     @blur="inputHover = false"
     ref="reference"
     v-clickoutside="handleClickoutside"
     @keydown="handleKeydown"
   >
+    <span 
+      v-if="alertTipsIndex >= 0"
+      class="af-alert-tips-index">{{alertTipsIndex}}</span>
     <af-input
       ref="input"
       :readonly="readonly"
@@ -31,7 +34,11 @@
       :size="size"
       :disabled="cascaderDisabled"
       :class="{ 'is-focus': menuVisible }"
+      :linkAlert="alertTipRef ? true : false"
     >
+      <template slot="prepend">
+        {{label}}
+      </template>
       <template slot="suffix">
         <i
           key="1"
@@ -48,6 +55,7 @@
       </template>
     </af-input>
     <span class="af-cascader__label" v-show="inputValue === '' && !isOnComposition">
+      <span class="label">{{label}}</span>
       <template v-if="showAllLevels">
         <template v-for="(label, index) in currentLabels">
           {{ label }}
@@ -63,6 +71,7 @@
 
 <script>
 import Vue from 'vue';
+import alertBus from '../../alert/alert-bus';
 import AfCascaderMenu from './menu';
 import AfInput from 'aui/packages/input';
 import Popper from 'aui/src/utils/vue-popper';
@@ -170,6 +179,11 @@ export default {
     hoverThreshold: {
       type: Number,
       default: 500
+    },
+    label: [String],
+    alertTipRef: {
+      type: String,
+      default: ''
     }
   },
 
@@ -184,7 +198,8 @@ export default {
       flatOptions: null,
       id: generateId(),
       needFocus: true,
-      isOnComposition: false
+      isOnComposition: false,
+      alertTipsIndex: -1
     };
   },
 
@@ -291,6 +306,16 @@ export default {
       } else {
         this.needFocus = true;
       }
+
+      this.alertTipRef && alertBus.$emit('alerttips-up', {
+        type: 'mouseout',
+        ref: this.alertTipRef,
+        isFocus: false
+      }, (resp, isCurrent, index) => {
+        this.$refs.input.alertTipsHover = resp;
+        this.$refs.input.alertTipsFocus = isCurrent;
+        this.alertTipsIndex = index;
+      });
     },
     handleActiveItemChange(value) {
       this.$nextTick(_ => {
@@ -420,6 +445,27 @@ export default {
     },
     handleComposition(event) {
       this.isOnComposition = event.type !== 'compositionend';
+    },
+    handleMouseEnter() {
+      this.inputHover = true;
+      this.alertTipRef && alertBus.$emit('alerttips-up', {
+        type: 'mouseover', ref: this.alertTipRef
+      }, resp => {
+        this.$refs.input.alertTipsHover = resp;
+        this.$refs.input.alertTipsFocus = resp;
+        this.alertTipsIndex = -1;
+      });
+    },
+    handleMouseLeave() {
+      this.alertTipRef && alertBus.$emit('alerttips-up', {
+        type: 'mouseout',
+        ref: this.alertTipRef,
+        isFocus: this.menuVisible
+      }, (resp, isCurrent, index) => {
+        this.$refs.input.alertTipsHover = resp;
+        this.$refs.input.alertTipsFocus = isCurrent;
+        this.alertTipsIndex = !this.menuVisible ? index : -1;
+      });
     }
   },
 
@@ -449,7 +495,30 @@ export default {
   },
 
   mounted() {
+    let $this = this;
+
     this.flatOptions = this.flattenOptions(this.options);
+
+    this.$nextTick(_ => {
+      alertBus.$on('alerttips-down', ({type, ref}) => {
+        if (ref === this.alertTipRef) {
+          let input = $this.$refs.input;
+
+          input.alertTipsHover = type === 'mouseover' || input.alertTipsHover;
+          input.alertTipsFocus = type === 'mouseover';
+        }
+      });
+
+      if (this.alertTipRef) {
+        alertBus.$emit('alerttips-up', {
+          type: 'initStatus', ref: this.alertTipRef
+        }, (resp, _, index) => {
+          $this.$refs.input.alertTipsHover = resp;
+          $this.$refs.input.alertTipsFocus = false;
+          this.alertTipsIndex = index;
+        });
+      }
+    });
   }
 };
 </script>

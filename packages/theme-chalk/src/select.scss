@@ -9,14 +9,34 @@
 @import "scrollbar";
 
 @include b(select) {
-  display: inline-block;
   position: relative;
-
+  line-height: normal;
+  background-color: $--color-blue-primary;
+  border: 1px solid $--color-blue-primary;
+  font-size: $--select-font-size;
+  border-radius: $--input-border-radius;
+  display: inline-table;
+  cursor: pointer;
   &:hover {
-    .af-input__inner {
-      background-color: $--color-primary-i-hover;
-      border-color: $--color-primary-i-hover;
-    }
+    border-color: $--input-hover-border;
+  }
+
+  .af-input-group__prepend {
+    background-color: $--color-blue-primary;
+    color: #707070;
+    vertical-align: top;
+    display: table-cell;
+    position: relative;
+    border-radius: 2px;
+    padding: 0 0 0 10px;
+    width: 1px;
+    white-space: nowrap;
+  }
+
+  .af-input__hidden-label {
+    padding: 0 0 0 10px;
+    white-space: nowrap;
+    color: transparent;
   }
 
   .af-input__inner {
@@ -28,13 +48,20 @@
     &::-webkit-input-placeholder {
       color: $--color-primary;
     }
-    &:focus {
-      background-color: $--color-blue-focus;
-      border-color: $--color-blue-focus;
-    }
+    // &:focus {
+    //   background-color: $--color-blue-focus;
+    //   border-color: $--color-blue-focus;
+    // }
   }
 
   .af-input {
+    border: none;
+    &:hover {
+      border: none;
+    }
+    &:focus {
+      border: none;
+    }
     & .af-select__caret {
       color: $--select-input-color;
       font-size: $--select-input-font-size;
@@ -64,33 +91,33 @@
       & .af-input__inner {
         cursor: not-allowed;
 
-        &:hover {
-          border-color: $--select-disabled-border;
-        }
+        // &:hover {
+        //   border-color: $--select-disabled-border;
+        // }
       }
       & .af-input__icon {
         color: $--select-disabled-border;
       }
     }
 
-    &.is-focus .af-input__inner {
-      border-color: $--select-input-focus-background;
-    }
+    // &.is-focus .af-input__inner {
+      // border-color: $--select-input-focus-background;
+    // }
   }
 
-  > .af-input {
-    display: block;
-  }
+  // > .af-input {
+  //   display: block;
+  // }
 
   @include e(input) {
     border: none;
     outline: none;
     padding: 0;
-    margin-left: 15px;
+    margin-left: 2px;
     color: $--select-multiple-input-color;
     font-size: $--select-font-size;
     appearance: none;
-    height: 28px;
+    height: 14px;
     background-color: transparent;
     @include when(mini) {
       height: 14px;
@@ -107,21 +134,21 @@
     line-height: 18px;
     font-size: $--select-input-font-size;
 
-    &:hover {
-      color: $--select-close-hover-color;
-    }
+    // &:hover {
+    //   color: $--select-close-hover-color;
+    // }
   }
 
   @include e(tags) {
     position: absolute;
     line-height: normal;
-    white-space: normal;
+    white-space: nowrap;
     z-index: $--index-normal;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
   }
 
   .af-tag__close {
@@ -131,8 +158,10 @@
   .af-tag {
     box-sizing: border-box;
     border-color: transparent;
-    margin: 2px 0 2px 4px;
+    margin: 1px 0 1px 2px;
     background-color: $--color-tag-bg;
+    height: 16px;
+    line-height: 16px;
 
     &__close.af-icon-close {
       right: -7px;
@@ -145,8 +174,25 @@
 
       &::before {
         display: block;
-        transform: translate(0, .5px);
+        // transform: translate(0, .5px);
       }
+    }
+  }
+}
+
+.af-select {
+  &.af-alert-tip-border {
+    border-color: red;
+  }
+  
+  &.af-alert-tip-bg {
+    .af-input-group__prepend {
+      background-color: #ffeeee;
+    }
+
+    .af-input__inner {
+      border-color: #ffeeee;
+      background-color: #ffeeee;
     }
   }
 }

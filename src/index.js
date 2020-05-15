@@ -72,6 +72,8 @@ import MessageBox from '../packages/message-box/index.js';
 import Notification from '../packages/notification/index.js';
 import Loading from '../packages/loading/index.js';
 import Drag from '../packages/drag/index.js';
+import Step from '../packages/step/index.js';
+import CombineAddPanel from '../packages/combine-add-panel/index.js';
 import locale from 'aui/src/locale';
 import CollapseTransition from 'aui/src/transitions/collapse-transition';
 
@@ -143,6 +145,8 @@ const components = [
   CollapseItem,
   DescriptionList,
   DescriptionListItem,
+  Step,
+  CombineAddPanel,
   CollapseTransition
 ];
 
@@ -177,7 +181,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 module.exports = {
-  version: '0.0.1',
+  version: '1.3.22',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -253,7 +257,9 @@ module.exports = {
   Message,
   MessageBox,
   Notification,
-  Drag
+  Drag,
+  Step,
+  CombineAddPanel
 };
 
 module.exports.default = module.exports;

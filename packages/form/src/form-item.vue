@@ -17,7 +17,6 @@
         <slot></slot>
         <transition name="af-zoom-in-top">
           <slot
-            v-if="validateState === 'error' && showMessage && form.showMessage"
             name="error"
             :error="validateMessage">
             <div
@@ -28,7 +27,11 @@
                   : (afForm && afForm.inlineMessage || false)
               }"
             >
-              {{validateMessage}}
+              <template 
+                v-if="typeof showMessage === 'boolean'
+                  ? showMessage
+                  : (afForm && afForm.showMessage || false)"
+              >{{validateMessage}}</template>
             </div>
           </slot>
         </transition>
@@ -39,9 +42,9 @@
         <slot></slot>
         <transition name="af-zoom-in-center">
           <slot
-            v-if="validateState === 'error'"
-            name="success"
-            :error="validateMessage">
+            name="error"
+            :error="validateMessage"
+          >
             <div
               class="af-form-item__errorNoLabel"
               :class="{
@@ -50,7 +53,11 @@
                   : (afForm && afForm.inlineMessage || false)
               }"
             >
-              {{validateMessage}}
+              <template 
+                v-if="typeof showMessage === 'boolean'
+                  ? showMessage
+                  : (afForm && afForm.showMessage || false)"
+              >{{validateMessage}}</template>
             </div>
           </slot>
         </transition>
@@ -95,8 +102,8 @@
         default: ''
       },
       showMessage: {
-        type: Boolean,
-        default: true
+        type: [String, Boolean],
+        default: ''
       },
       size: String
     },

@@ -1,8 +1,8 @@
 <template>
   <div style="margin: 20px;">
     <!-- <layout></layout> -->
-    <autocomplete></autocomplete>
-    <!--<CustomColumn></CustomColumn>-->
+    <!-- <autocomplete></autocomplete> -->
+    <CustomColumn></CustomColumn>
   </div>
 </template>
 <script>
@@ -24,5 +24,5 @@
   };
 </script>
 <style lang="scss" scoped>
-  
+
 </style>

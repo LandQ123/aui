@@ -26,11 +26,11 @@
 
     &.hover, &:hover {
       background-color: $--color-blue-primary;
-      color: $--color-primary;
+      // color: $--color-primary;
     }
 
     &.selected {
-      background-color: $--color-blue-primary;
+      background-color: $--table-current-row-background;
       color: $--color-primary;
     }
   }

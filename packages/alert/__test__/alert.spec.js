@@ -1,4 +1,4 @@
-import { createTest, createVue, destroyVM } from '../util';
+import { createTest, createVue, destroyVM } from '../../../test/unit/util';
 import Alert from 'packages/alert';
 
 describe('Alert', () => {

@@ -4,7 +4,7 @@
 @include b(textarea) {
   display: inline-block;
   width: 100%;
-  background-color: $--input-fill;
+  background-color: $--color-blue-primary;
   border: $--input-border;
   border-radius: $--input-border-radius;
   vertical-align: bottom;
@@ -27,6 +27,10 @@
     color: #a0a0a0;
   }
 
+  .af-input-group__prepend {
+    vertical-align: text-top;
+  }
+
   @include e(inner) {
     display: block;
     resize: vertical;
@@ -36,10 +40,10 @@
     width: 100%;
     font-size: $--input-font-size;
     color: $--input-color;
-    background-color: $--input-fill;
+    background-color: $--color-blue-primary;
     background-image: none;
     transition: $--border-transition-base;
-    border-color: $--input-fill;
+    border-color: $--color-blue-primary;
     &::placeholder {
       color: $--input-placeholder-color;
     }
@@ -78,6 +82,7 @@
   display: inline-block;
   width: 100%;
   border: $--border-base-input;
+  border-radius: $--input-border-radius;
   @include scroll-bar;
 
   &:hover {
@@ -92,7 +97,7 @@
   & .af-input__clear {
     color: $--input-icon-color;
     font-size: $--input-font-size;
-    line-height: 22px;
+    line-height: 24px;
     cursor: pointer;
     transition: $--color-transition-base;
 
@@ -103,9 +108,8 @@
 
   @include e(inner) {
     -webkit-appearance: none;
-    background-color: $--input-fill;
+    background-color: $--color-blue-primary;
     background-image: none;
-    border-radius: $--input-border-radius;
     border: $--input-border;
     box-sizing: border-box;
     color: $--input-color;
@@ -117,10 +121,12 @@
     padding: 0 10px;
     transition: $--border-transition-base;
     width: 100%;
-
     &::placeholder {
       color: $--input-placeholder-color;
     }
+  }
+  .af-input-group__prepend + input {
+    padding: 0 3px;
   }
 
   @include e(suffix) {
@@ -243,7 +249,7 @@
 }
 
 @include b(input-group) {
-  line-height: normal;
+  line-height: $--input-height;
   display: inline-table;
   width: 100%;
   border-collapse: separate;
@@ -255,13 +261,13 @@
   }
 
   @include e((append, prepend)) {
-    background-color: $--input-fill;
+    background-color: $--color-blue-primary;
     color: $--color-text-label;
     vertical-align: middle;
     display: table-cell;
     position: relative;
     border-radius: $--input-border-radius;
-    padding:0 5px 0 10px;
+    padding:0 0 0 10px;
     width: 1px;
     white-space: nowrap;
 
@@ -301,6 +307,7 @@
     border-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    padding: 0 10px 0 0;
   }
 
   @include m(prepend) {
@@ -329,4 +336,43 @@
   display: none;
   width: 0;
   height: 0;
+}
+
+.af-input__inner,
+.af-input {
+  position: relative;
+
+  &.af-alert-tip-border,
+  &.af-alert-tip-border:hover {
+    border-color: red;
+  }
+  
+  &.af-alert-tip-bg {
+    background-color: #ffeeee;
+
+    > .af-input-group__prepend {
+      background-color: #ffeeee;
+    }
+
+    > .af-input__inner {
+      border-color: #ffeeee;
+      background-color: #ffeeee;
+    }
+
+    .af-range-input {
+      background-color: #ffeeee;
+    }
+  }
+}
+
+.af-alert-tips-index {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding: 0 3px;
+  line-height: 20px;
+  color: #ffffff;
+  background: rgba($color: #ff4d4d, $alpha: .75);
+  z-index: 1;
 }

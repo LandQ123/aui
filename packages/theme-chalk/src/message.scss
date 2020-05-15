@@ -2,56 +2,44 @@
 @import "common/var";
 
 @include b(message) {
+  display: flex;
+  flex-direction: column;
   width: $--message-min-width;
+  min-height: $--message-min-height;
+  max-height: $--message-max-height;
   box-sizing: border-box;
   border-radius: $--border-radius-base;
   border-width: $--border-width-base;
   border-style: $--border-style-base;
   border-color: $--border-color-lighter;
-  position: fixed;
+  position: absolute;
   left: 50%;
-  top: 55px;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   background-color: #fff;
   transition: opacity 0.3s, transform .4s;
+  text-align: left;
   overflow: hidden;
-  display: flex;
-  align-items: center;
   
-  @include m(success) {
-    padding: $--message-padding;
-    background-color: $--color-success-lighter;
-    border-color: $--color-success-light;
-    .af-message__icon {
-      margin-right: 10px;
-    }
-    .af-message__content {
-      padding: 0;
-      font-size: 14px;
-      color: $--message-success-color;
-      line-height: 1;
-      overflow: hidden;
-      &:focus {
-        outline-width: 0;
-      }
-    }
+  @include e(wrapper) {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
 
-    &.is-closable {
-      .af-message__content {
-        padding-right: 16px;
-      }
-    }
-    p {
-      margin: 0;
+    &::after {
+      content: "";
+      display: inline-block;
+      height: 100%;
+      width: 0;
+      vertical-align: middle;
     }
   }
 
-  @include e(wrapper) {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: $--message-min-height;
-    max-height: $--message-max-height;
+  @include e(box) {
+    
   }
 
   @include e(header) {
@@ -174,8 +162,34 @@
   }
 }
 
-.af-message-fade-enter,
+.af-message-fade-enter-active {
+  animation: message-fade-in .3s;
+}
+
 .af-message-fade-leave-active {
-  opacity: 0;
-  transform: translate(-50%, -100%);
+  animation: message-fade-out .3s;
+}
+
+@keyframes message-fade-in {
+  0% {
+    transform: translate3d(0, -10px, 0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes message-fade-out {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, -10px, 0);
+    opacity: 0;
+  }
 }

@@ -103,7 +103,19 @@
     display: inline-flex;
     align-items: center;
     // padding: 3px 10px;
-    padding: 3px 0 3px 0;
+    padding: 0;
+    border-radius: $--input-border-radius;
+    box-sizing: content-box;
+    border: $--border-base-input;
+    height: 20px;
+    &:hover {
+      border-color: $--input-hover-border;
+    }
+  
+    &:focus {
+      outline: none;
+      border-color: $--input-focus-border;
+    }
   }
 
   .af-range-input {
@@ -206,3 +218,15 @@
     }
   }
 }
+
+// .af-date-editor {
+  
+//   &.af-alert-tip-border {
+//     border-color: red;
+//   }
+
+//   &.af-alert-tip-bg .af-input__inner {
+//     border-color: #ffeeee;
+//     background-color: #ffeeee;
+//   }
+// }

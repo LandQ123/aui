@@ -118,11 +118,88 @@
           }]
         }]
       }];
+      const treeData2 = [{
+        id: 1,
+        label: 'AMD',
+        children: [{
+          id: 4,
+          label: 'AMD-1',
+          children: [{
+            id: 5,
+            label: 'AMD-1-1'
+          }, {
+            id: 6,
+            label: 'AMD-1-2',
+          }, {
+            id: 7,
+            label: 'AMD-1-3'
+          }, {
+            id: 8,
+            label: 'AMD-1-4'
+          }, {
+            id: 9,
+            label: 'AMD-1-5'
+          }]
+        }]
+      }, {
+        id: 2,
+        label: 'ARC',
+        children: [{
+          id: 13,
+          label: 'ARC-1',
+          children: [{
+            id: 15,
+            label: 'ARC-1-1'
+          }, {
+            id: 16,
+            label: 'ARC-1-2'
+          }]
+        }, {
+          id: 14,
+          label: 'ARC-2',
+          children: [{
+            id: 17,
+            label: 'ARC-2-1'
+          }, {
+            id: 18,
+            label: 'ARC-2-2'
+          }]
+        }]
+      }, 
+      {
+        id: 3,
+        label: 'ATP',
+        children: [{
+          id: 19,
+          label: 'ATP-1',
+          children: [{
+            id: 21,
+            label: 'ATP-1-1'
+          }, {
+            id: 22,
+            label: 'ATP-1-2'
+          }]
+        }, {
+          id: 20,
+          label: 'ATP-2',
+          disabled: true,
+          children: [{
+            id: 23,
+            label: 'ATP-2-1',
+            disabled: true
+          }, {
+            id: 24,
+            label: 'ATP-2-2',
+            disabled: true
+          }]
+        }]
+      }];
       return {
         data: generateData(),
         data2: generateData2(),
         data3: generateData3(),
         data4: treeData,
+        data5: treeData2,
         value1: [1, 4],
         value2: [],
         value3: [],
@@ -130,6 +207,7 @@
         value5: [1],
         value6: [],
         value7: [],
+        value8: [],
         defaultValue: '23,24',
         defaultProps: {
           children: 'children',
@@ -386,7 +464,7 @@
 <script>
   export default {
     data() {
-      const treeData = [{
+      const treeData1 = [{
         id: 1,
         label: 'AMD',
         children: [{
@@ -460,9 +538,127 @@
         }]
       }];
       return {
+        data4: treeData1,
         value7: [],
         defaultValue: '23,24',
-        data4: treeData,
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
+    },
+    methods: {
+      handleChange(val, direction, move) {
+        console.log(val, direction, move);
+      },
+    }
+  };
+</script>
+```
+
+:::
+
+### 禁用状态
+
+可将 Tree 的某些节点设置为禁用状态
+
+:::demo 通过disabled设置禁用状态。
+```html
+<template>
+  <af-transfer-tree
+    style="text-align: left; display: inline-block"
+    v-model="value8"
+    :data="data5"
+    :default-value="defaultValue"
+    filterable
+    :titles="['Source', 'Target']"
+    @change="handleChange">
+  </af-transfer-tree>
+</template>
+
+<script>
+  export default {
+    data() {
+      const treeData2 = [{
+        id: 1,
+        label: 'AMD',
+        children: [{
+          id: 4,
+          label: 'AMD-1',
+          children: [{
+            id: 5,
+            label: 'AMD-1-1'
+          }, {
+            id: 6,
+            label: 'AMD-1-2',
+          }, {
+            id: 7,
+            label: 'AMD-1-3'
+          }, {
+            id: 8,
+            label: 'AMD-1-4'
+          }, {
+            id: 9,
+            label: 'AMD-1-5'
+          }]
+        }]
+      }, {
+        id: 2,
+        label: 'ARC',
+        children: [{
+          id: 13,
+          label: 'ARC-1',
+          children: [{
+            id: 15,
+            label: 'ARC-1-1'
+          }, {
+            id: 16,
+            label: 'ARC-1-2'
+          }]
+        }, {
+          id: 14,
+          label: 'ARC-2',
+          children: [{
+            id: 17,
+            label: 'ARC-2-1'
+          }, {
+            id: 18,
+            label: 'ARC-2-2'
+          }]
+        }]
+      }, 
+      {
+        id: 3,
+        label: 'ATP',
+        children: [{
+          id: 19,
+          label: 'ATP-1',
+          children: [{
+            id: 21,
+            label: 'ATP-1-1'
+          }, {
+            id: 22,
+            label: 'ATP-1-2'
+          }]
+        }, {
+          id: 20,
+          label: 'ATP-2',
+          disabled: true,
+          children: [{
+            id: 23,
+            label: 'ATP-2-1',
+            disabled: true
+          }, {
+            id: 24,
+            label: 'ATP-2-2',
+            disabled: true
+          }]
+        }]
+      }];
+      return {
+        data5: treeData2,
+        value8: [],
+        defaultValue: '23,24',
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -478,7 +674,6 @@
 </script>
 ```
 :::
-
 
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
@@ -507,8 +702,8 @@
 | button-texts | 自定义按钮文案 | array | — | ['全选', '清空'] |
 | render-content | 不支持 | — | — | — |
 | format | 列表底部勾选状态文案 | object{total} | — | { total: '${total}'|
-| node-key | 每个树节点用来作为唯一标识的属性，整棵树应该是唯一的 | String | — | id |
-| props | 数据源的字段别名 | object{label, children} | — | {label: 'label', children: 'children'} |
+| node-key | 每个树节点用来作为唯一标识的属性，整棵树应该是唯一的 | String | — | — |
+| props | 数据源的字段别名 | object{label, children, disabled} | — | {label: 'label', children: 'children', disabled: 'disabled'} |
 
 ### Scoped Slot
 | name | 说明 |

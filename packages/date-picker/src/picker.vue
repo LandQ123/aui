@@ -16,9 +16,16 @@
     @input="value => userInput = value"
     @change="handleChange"
     @mouseenter.native="handleMouseEnter"
-    @mouseleave.native="showClose = false"
+    @mouseleave.native="handleMouseLeave"
     :validateEvent="false"
+    :linkAlert="alertTipRef ? true : false"
     ref="reference">
+    <!-- @mouseleave.native="showClose = false" -->
+    
+    <span 
+      slot="preAlertIndex"
+      v-if="alertTipsIndex >= 0"
+      class="af-alert-tips-index">{{alertTipsIndex}}</span>
     <span 
       v-if="label"
       slot="prepend">{{ label }}</span>
@@ -40,15 +47,21 @@
       'af-date-editor--' + type,
       pickerSize ? `af-range-editor--${ pickerSize }` : '',
       pickerDisabled ? 'is-disabled' : '',
-      pickerVisible ? 'is-active' : ''
+      pickerVisible ? 'is-active' : '',
+      {
+        'af-alert-tip-border': alertTipsHover || alertTipsFocus,
+        'af-alert-tip-bg': alertTipsFocus
+      }
     ]"
     @click="handleRangeClick"
     @mouseenter="handleMouseEnter"
-    @mouseleave="showClose = false"
+    @mouseleave="handleMouseLeave"
     @keydown="handleKeydown"
     ref="reference"
     v-clickoutside="handleClose"
     v-else>
+
+    <span v-if="alertTipsIndex >= 0" class="af-alert-tips-index">{{alertTipsIndex}}</span>
 
     <div 
       style="width:auto;background-color:unset;"
@@ -83,18 +96,20 @@
       @change="handleEndChange"
       @focus="handleFocus"
       class="af-range-input">
-    <i :class="['af-input__icon', 'af-range__icon', triggerClass]"></i>
-    <!-- <i
-      @click="handleClickIcon"
+    <!-- <i 
+      :class="['af-input__icon', 'af-range__icon', triggerClass]"></i> -->
+    <i
       v-if="haveTrigger"
-      :class="[showClose ? '' + clearIcon : '']"
-      class="af-input__icon af-range__close-icon">
-    </i> -->
+      @click="handleClickIcon"
+      class="af-input__icon af-range__icon"
+      :class="[showClose ? '' + clearIcon : triggerClass]">
+    </i>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import alertBus from '../../alert/alert-bus';
 import Clickoutside from 'main/utils/clickoutside';
 import { formatDate, parseDate, isDateObject, getWeekNumber } from './util';
 import Popper from 'main/utils/vue-popper';
@@ -397,7 +412,11 @@ export default {
       default: '-'
     },
     pickerOptions: {},
-    unlinkPanels: Boolean
+    unlinkPanels: Boolean,
+    alertTipRef: {
+      type: String,
+      default: ''
+    }
   },
 
   components: { ElInput },
@@ -410,7 +429,11 @@ export default {
       showClose: false,
       userInput: null,
       valueOnOpen: null, // value when picker opens, used to determine whether to emit change
-      unwatchPickerOptions: null
+      unwatchPickerOptions: null,
+      focusing: false,
+      alertTipsIndex: -1,
+      alertTipsHover: false,
+      alertTipsFocus: false
     };
   },
 
@@ -424,7 +447,7 @@ export default {
         this.hidePicker();
         this.emitChange(this.value);
         this.userInput = null;
-        this.dispatch('ElFormItem', 'el.form.blur');
+        this.dispatch('AfFormItem', 'el.form.blur');
         this.$emit('blur', this);
         this.blur();
       }
@@ -445,7 +468,7 @@ export default {
     },
     value(val, oldVal) {
       if (!valueEquals(val, oldVal) && !this.pickerVisible) {
-        this.dispatch('ElFormItem', 'el.form.change', val);
+        this.dispatch('AfFormItem', 'el.form.change', val);
       }
     }
   },
@@ -593,6 +616,29 @@ export default {
     this.$on('fieldReset', this.handleFieldReset);
   },
 
+  mounted() {
+    this.$nextTick(_ => {
+      let $this = this;
+
+      alertBus.$on('alerttips-down', ({type, ref}) => {
+        if (ref === this.alertTipRef) {
+          let reference = $this.$refs.reference;
+
+          $this.alertTipsHover = reference.alertTipsHover = type === 'mouseover' || reference.alertTipsHover;
+          $this.alertTipsFocus = reference.alertTipsFocus = type === 'mouseover';
+        }
+      });
+
+      this.alertTipRef && alertBus.$emit('alerttips-up', {
+        type: 'initStatus', ref: this.alertTipRef
+      }, (resp, _, index) => {
+        this.alertTipsHover = this.$refs.reference.alertTipsHover = resp;
+        this.alertTipsFocus = this.$refs.reference.alertTipsFocus = false;
+        $this.alertTipsIndex = index;
+      });
+    });
+  },
+
   methods: {
     focus() {
       if (!this.ranged) {
@@ -604,6 +650,16 @@ export default {
 
     blur() {
       this.refInput.forEach(input => input.blur());
+      this.focusing = false;
+
+      // link with af-alert
+      this.alertTipRef && alertBus.$emit('alerttips-up', {
+        type: 'blur', ref: this.alertTipRef
+      }, (resp, _, index) => {
+        this.alertTipsHover = this.$refs.reference.alertTipsHover = resp;
+        this.alertTipsFocus = this.$refs.reference.alertTipsFocus = false;
+        this.alertTipsIndex = index;
+      });
     },
 
     // {parse, formatTo} Value deals maps component value with internal Date
@@ -641,6 +697,28 @@ export default {
       if (!this.valueIsEmpty && this.clearable) {
         this.showClose = true;
       }
+
+      this.alertTipRef && alertBus.$emit('alerttips-up', {
+        type: 'mouseover', ref: this.alertTipRef
+      }, resp => {
+        this.alertTipsHover = this.$refs.reference.alertTipsHover = resp;
+        this.alertTipsFocus = this.$refs.reference.alertTipsFocus = resp;
+        this.alertTipsIndex = -1;
+      });
+    },
+
+    handleMouseLeave() {
+      this.showClose = false;
+
+      this.alertTipRef && alertBus.$emit('alerttips-up', {
+        type: 'mouseout',
+        ref: this.alertTipRef,
+        isFocus: this.focusing
+      }, (resp, isCurrent, index) => {
+        this.alertTipsHover = this.$refs.reference.alertTipsHover = resp;
+        this.alertTipsFocus = this.$refs.reference.alertTipsFocus = isCurrent;
+        this.alertTipsIndex = !this.focusing ? index : -1;
+      });
     },
 
     handleChange() {
@@ -741,6 +819,17 @@ export default {
         this.pickerVisible = true;
       }
       this.$emit('focus', this);
+
+      // link with af-alert
+      this.focusing = true;
+      if (this.alertTipRef) {
+        alertBus.$emit('alerttips-up', {
+          type: 'mouseover', ref: this.alertTipRef
+        }, resp => {
+          this.alertTipsHover = this.$refs.reference.alertTipsHover = resp;
+          this.alertTipsFocus = this.$refs.reference.alertTipsFocus = resp;
+        });
+      }
     },
 
     handleKeydown(event) {
@@ -911,7 +1000,7 @@ export default {
       // determine user real change only
       if (!valueEquals(val, this.valueOnOpen)) {
         this.$emit('change', val);
-        this.dispatch('ElFormItem', 'el.form.change', val);
+        this.dispatch('AfFormItem', 'el.form.change', val);
         this.valueOnOpen = val;
       }
     },

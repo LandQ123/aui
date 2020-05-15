@@ -7,6 +7,8 @@
   // border-bottom: 1px solid $--collapse-border-color;
 }
 @include b(collapse-item) {
+  padding-bottom: 4px;
+
   @include e(header) {
     position: relative;
     padding: 3px 0;
@@ -64,7 +66,7 @@
 // primary
 .primary {
   .af-collapse-item {
-    margin-bottom: 4px;
+    // margin-bottom: 4px;
   }
   .af-collapse-item__header {
     border-left: 2px solid $--color-primary;

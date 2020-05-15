@@ -3,8 +3,17 @@
     data() {
       return {
         activeNames: ['1'],
-        activeNames4: ['1'],
-        activeName: '1'
+        activeNames4: [],
+        activeName: '1',
+        scale: {
+          "a": 1,
+          "b": 2,
+          "c": 3
+        },
+        scaleNum: 2,
+        scaleDebounce: 500,
+        height: 500,
+        heightInput: 0
       };
     },
     methods: {
@@ -13,6 +22,10 @@
       },
       handleAlert(str) {
         alert(str);
+      },
+      changeHeight() {
+        this.heightInput = Math.random() * 1000;
+        this.height = this.heightInput;
       }
     }
   }
@@ -201,28 +214,33 @@ export default {
 
 ### 按比例占满指定高度
 
-配合使用 `height` 及 `scale`可以实现按比例占满指定高度，手风琴模式下无效
+配合使用 `height` 、 `scale` 和  `scaleNum` 可以实现按比例占满指定高度，手风琴模式下无效
 
-以下 demo height=300，scale=[1,1,2]
+以下 demo height=500，scale={a:1, b:2, c:3}，scale-num=2，scale-debounce=500，即打开两个面板时，触发按比例占满指定高度，且动态改变height时，会有500ms延迟时间重新分配各已经打开的面板高度
 
 :::demo
 ```html
-<div style="height:300px;background-color:#d1f0ff;">
+<div style="background-color:#d1f0ff;" :style="`height:${height}px;`">
+  改变高度：
+  <af-input type="text" placeholder="请输入高度" style="width: 200px;" v-model="heightInput"></af-input>
+  <af-button type="primary" size="small" @click="changeHeight">改变height</af-button>
   <af-collapse 
     v-model="activeNames4" 
     @change="handleChange" 
     type="primary"
-    :height=300
-    :scale=[1,1,2]>
-    <af-collapse-item title="该面板占 1 份" name="1">
+    :height=height
+    :scale=scale
+    :scale-num="scaleNum"
+    :scale-debounce="scaleDebounce">
+    <af-collapse-item title="该面板占 1 份" name="a">
       <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
       <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
     </af-collapse-item>
-    <af-collapse-item title="该面板占 1 份" name="2">
+    <af-collapse-item title="该面板占 2 份" name="b">
       <div>简化流程：设计简洁直观的操作流程；</div>
       <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
     </af-collapse-item>
-    <af-collapse-item title="该面板占 2 份" name="3">
+    <af-collapse-item title="该面板占 3 份" name="c">
       <div>简化流程：设计简洁直观的操作流程；</div>
       <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
     </af-collapse-item>
@@ -232,12 +250,25 @@ export default {
 export default {
   data() {
     return {
-      activeNames4: []
+      activeNames4: [],
+      scale: {
+        "a": 1,
+        "b": 2,
+        "c": 3
+      },
+      scaleNum: 2,
+      scaleDebounce: 500,
+      height: 500,
+      heightInput: 0
     };
   },
   methods: {
     handleChange(val) {
       console.log(val);
+    },
+    changeHeight() {
+      this.heightInput = Math.random() * 1000;
+      this.height = this.heightInput;
     }
   }
 }
@@ -251,7 +282,9 @@ export default {
 | value | 当前激活的面板(如果是手风琴模式，绑定值类型需要为`string`，否则为`array`) | string/array | — | — |
 | type | 风格 | string | primary 、simple | primary |
 | height | 折叠面板最大高度，配合 scale 使用可实现各面板按比例占满高度 | Number | - |
-| scale | 各面板高度占比，需配合 height 使用 | Array | - |
+| scale | 各面板高度占比，属性的key必须与面板name一一对应，同时需配合 height 使用 | Object | - | - |
+| scale-num | 触发按比例占满高度的折叠面板个数，非数字、小于1或与大于面板个数，触发无效 | Number | - | 1 |
+| scale-debounce | 动态改变height后，重新触发按比例分配面板高度的防抖动延时 | Number | - | 100 |
 
 ### Collapse Events
 | 事件名称 | 说明 | 回调参数 |

@@ -5,10 +5,19 @@
 
 @include b(pagination) {
   white-space: nowrap;
-  padding: 2px 5px;
+  height: 36px;
+  align-items: center;
   color: $--pagination-color;
   font-weight: bold;
+  display: flex;
+  background: #fff;
+  position: relative;
+  padding: 0 10px;
   @include utils-clearfix;
+
+  @include e(isTotal){
+    height: 20px;
+  }
 
   span:not([class*=suffix]),
   button {
@@ -34,8 +43,8 @@
   }
 
   .af-select .af-input {
-    width: 100px;
-    margin: 0 5px;
+    width: 90px;
+    height: 22px;
 
     .af-input__inner {
       padding-right: 25px;
@@ -118,7 +127,7 @@
 
     .more::before,
     li.more::before {
-      line-height: 24px;
+      line-height: 22px;
     }
 
     span:not([class*=suffix]),
@@ -136,7 +145,7 @@
   }
 
   @include e(sizes) {
-    margin: 0 10px 0 0;
+    margin: 0 17px 0 0;
     font-weight: normal;
     color: $--color-text-regular;
 
@@ -144,16 +153,16 @@
       font-size: $--pagination-font-size;
       padding-left: 8px;
 
-      &:hover {
-        border-color: $--pagination-hover-fill;
-      }
+      // &:hover {
+      //   border-color: $--pagination-hover-fill;
+      // }
     }
   }
 
   @include e(total) {
-    margin-right: 10px;
+    flex: 1;
     font-weight: normal;
-    // color: $--color-text-regular;
+    color: #707070;
   }
 
   @include e(jump) {
@@ -167,7 +176,12 @@
   }
 
   @include e(rightwrapper) {
-    float: right;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  @include e(leftwrapper) {
+    flex: 1;
   }
 
   @include e(editor) {
@@ -254,11 +268,12 @@
   margin: 0;
 
   .more::before {
-    line-height: 30px;
+    line-height: 22px;
+    font-size: 16px;
   }
 
   li {
-    padding: 0 4px;
+    padding: 0 2px;
     background: $--pagination-fill;
     vertical-align: top;
     display: inline-block;

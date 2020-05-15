@@ -29,7 +29,7 @@
           </button>
         </div>
         <div 
-          :class="['af-dialog__body', customBodyClass]"
+          :class="['af-dialog__body', $slots.footer && 'is-with-footer', customBodyClass]"
           v-if="rendered"
           :style="bodyStyle">
           <slot></slot>
@@ -46,12 +46,14 @@
   import Popup from 'aui/src/utils/popup';
   import Migrating from 'aui/src/mixins/migrating';
   import emitter from 'aui/src/mixins/emitter';
+  import { drag } from 'aui/packages/drag/src/directive.js';
 
   export default {
     name: 'AfDialog',
-
     mixins: [Popup, emitter, Migrating],
-
+    directives: {
+      drag
+    },
     props: {
       title: {
         type: String,
@@ -102,10 +104,6 @@
         default: ''
       },
 
-      top: {
-        type: String,
-        default: '15vh'
-      },
       bodyHeight: {
         type: String
       },
@@ -152,11 +150,8 @@
     computed: {
       style() {
         let style = {};
-        if (!this.fullscreen) {
-          style.marginTop = this.top;
-          if (this.width) {
-            style.width = this.width;
-          }
+        if (!this.fullscreen && this.width) {
+          style.width = this.width;
         }
         return style;
       },

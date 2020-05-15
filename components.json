@@ -70,5 +70,7 @@
   "message-box": "./packages/message-box/index.js",
   "notification": "./packages/drag/index.js",
   "loading": "./packages/loading/index.js",
-  "drag": "./packages/drag/index.js"
+  "drag": "./packages/drag/index.js",
+  "step": "./packages/step/index.js",
+  "combine-add-panel": "./packages/combine-add-panel/index.js"
 }

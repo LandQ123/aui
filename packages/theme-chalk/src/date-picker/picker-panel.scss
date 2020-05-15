@@ -6,7 +6,7 @@
   box-shadow: $--box-shadow-light;
   background: $--color-white;
   border-radius: $--border-radius-base;
-  line-height: 30px;
+  line-height: 20px;
   margin: 5px 0;
 
   @include e((body, body-wrapper)) {

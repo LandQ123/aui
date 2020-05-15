@@ -8,10 +8,10 @@
       :buttonText="buttonTexts[0]"
       :title="titles[0] || t('el.transfer.titles.0')"
       :placeholder="filterPlaceholder || t('el.transfer.filterPlaceholder')"
-      :dataMap="dataMap"
       :leafMap="leafMap"
+      :dataLeaf="dataLeaf"
       :tree="tree"
-      @move="addToRight">
+      @move="handleMove">
     </transfer-panel>
     <div class="af-transfer__link">
       <i class="af-icon-transfer"></i>
@@ -24,10 +24,10 @@
       :buttonText="buttonTexts[1]"
       :title="titles[1] || t('el.transfer.titles.1')"
       :placeholder="filterPlaceholder || t('el.transfer.filterPlaceholder')"
-      :dataMap="dataMap"
       :leafMap="leafMap"
+      :dataLeaf="dataLeaf"
       :tree="tree"
-      @move="addToLeft">
+      @move="handleMove">
     </transfer-panel>
   </div>
 </template>
@@ -123,6 +123,8 @@
        */
       dataMap() {
         let map = {};
+        let dataLeaf = [];
+        let leafMap = {};
         const transToMap = (data, prop, child, parent) => {
           data = data || [];
           data.forEach((cur, index, array) => {
@@ -134,50 +136,50 @@
             } else {
               cur.isLeaf = true;
               cur.previousSiblings = array.slice(0, index);
-              this.dataLeaf.push(cur);
-              this.leafMap[cur[prop]] = cur;
+              dataLeaf.push(cur);
+              leafMap[cur[prop]] = cur;
             }
             map[cur[prop]] = cur;
           });
         };
         transToMap(this.data, this.nodeKey, this.props.children, {[this.nodeKey]: 'root'});
+        this.dataLeaf = dataLeaf;
+        this.leafMap = leafMap;
         return map;
       },
-      /**
-       * Get source data.
-       *
-       * @return {Object} data The data that has deleted defaultVlue.
-       */
       sourceData() {
-        let data = JSON.parse(JSON.stringify(this.data));
-        let defaultArr = this.formatValue(this.defaultValue);
-        if (defaultArr.length === 0) return data;
-        const traverse = (data, prop, child) => {
-          let deleteList = [];
-          for (let [index, item] of data.entries()) {
-            if (defaultArr.length === 0) break;
-            if (item[child] && item[child].length) {
-              traverse(item[child], prop, child);
-            } else {
-              let loc = defaultArr.indexOf(item[this.nodeKey]);
-              if (loc !== -1) {
-                defaultArr.splice(loc, 1);
-                deleteList.push(index);
-              }
-            }
-          }
-          while (deleteList.length) {
-            let index = deleteList.pop();
-            data.splice(index, 1);
-          }
-        };
-        traverse(data, this.nodeKey, this.props.children);
+        let data = this.data;
+        let defaultArr = this.defaultValueArr;
+        this.$nextTick(() => {
+          let node = '';
+          this.dataLeaf.forEach(key => {
+            node = this.tree.store.getNode(key);
+            node.setChecked(false, false);
+          });
+          defaultArr.forEach(key => {
+            node = this.tree.store.getNode(key);
+            node.setChecked(true, false);
+          });
+        });
         return data;
       },
       targetData() {
         return this.targetOrder === 'original'
           ? this.dataLeaf.filter(item => this.value.indexOf(item[this.nodeKey]) > -1)
           : this.value.map(key => this.leafMap[key]);
+      },
+      defaultValueArr() {
+        let str = this.defaultValue || '';
+        let result = [];
+        let arr = str.replace(/\s+/g, '').split(',');
+        for (let item of arr) {
+          let node = this.dataMap[item];
+          if (node && node.isLeaf) {
+            result.push(node[this.nodeKey]);
+          }
+        }
+        this.$emit('input', result);
+        return result;
       },
       preValue() {
         return this.value.slice();
@@ -190,14 +192,6 @@
     watch: {
       value(val) {
         this.dispatch('AfFormItem', 'el.form.change', val);
-      },
-      defaultValue: {
-        handler: function(val, oldVal) {
-          if (val !== oldVal) {
-            this.$emit('input', this.formatValue(val));
-          }
-        },
-        immediate: true
       }
     },
 
@@ -224,37 +218,31 @@
        * Handle the move event, update the result of value.
        *
        * @param {Array} moveList the list be moved.
+       * @param {String} direction the direction of movement.
        */
-      addToLeft(moveList) {
+      handleMove(moveList, direction) {
         let currentValue = this.value.slice();
         let itemsToBeMoved = [];
         const key = this.nodeKey;
-        itemsToBeMoved = moveList.map(item => item[key]);
-        itemsToBeMoved.forEach(item => {
-          const index = currentValue.indexOf(item);
-          if (index > -1) {
-            currentValue.splice(index, 1);
-          }
-        });
-        this.$emit('input', currentValue);
-        this.$emit('change', currentValue, 'left', itemsToBeMoved);
-      },
 
-      /**
-       * Handle the move event, update the result of value.
-       *
-       * @param {Array} moveList the list be moved.
-       */
-      addToRight(moveList) {
-        let currentValue = this.value.slice();
-        let itemsToBeMoved = [];
-        const key = this.nodeKey;
-        itemsToBeMoved = moveList.filter(item => this.value.indexOf(item[key]) === -1).map(item => item[key]);
-        currentValue = this.targetOrder === 'unshift'
-          ? itemsToBeMoved.concat(currentValue)
-          : currentValue.concat(itemsToBeMoved);
-        this.$emit('input', currentValue);
-        this.$emit('change', currentValue, 'right', itemsToBeMoved);
+        if (direction === 'right') {
+          itemsToBeMoved = moveList.filter(item => this.value.indexOf(item[key]) === -1).map(item => item[key]);
+          currentValue = this.targetOrder === 'unshift'
+            ? itemsToBeMoved.concat(currentValue)
+            : currentValue.concat(itemsToBeMoved);
+          this.$emit('input', currentValue);
+          this.$emit('change', currentValue, 'right', itemsToBeMoved);
+        } else {
+          itemsToBeMoved = moveList.map(item => item[key]);
+          itemsToBeMoved.forEach(item => {
+            const index = currentValue.indexOf(item);
+            if (index > -1) {
+              currentValue.splice(index, 1);
+            }
+          });
+          this.$emit('input', currentValue);
+          this.$emit('change', currentValue, 'left', itemsToBeMoved);
+        }
       },
 
       /**
@@ -268,25 +256,6 @@
         } else if (which === 'right') {
           this.$refs.rightPanel.query = '';
         }
-      },
-
-      /**
-       * Format defaultValue.
-       * Firstly, filter the item that is't a leaf.
-       * Secondly, get the real id, the item may not be the same type with id.
-       *
-       * @param {String} val The value of binding.
-       * @return {Array} result The formatting result.
-       */
-      formatValue(val = '') {
-        let result = [];
-        let arr = val.replace(/\s+/g, '').split(',');
-        for (let item of arr) {
-          if (this.dataMap[item] && this.dataMap[item].isLeaf) {
-            result.push(this.dataMap[item][this.nodeKey]);
-          }
-        }
-        return result;
       }
     }
   };

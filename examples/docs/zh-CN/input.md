@@ -267,7 +267,7 @@ export default {
 export default {
   data() {
     return {
-      textarea: ''
+      textarea: '我就是测试下字数限制'
     }
   }
 }
@@ -299,7 +299,7 @@ export default {
 export default {
   data() {
     return {
-      textarea2: '',
+      textarea2: 'abc',
       textarea3: ''
     }
   }
@@ -774,7 +774,7 @@ export default {
 |------|--------|
 | prefix | 输入框头部内容，只对 `type="text"` 有效 |
 | suffix | 输入框尾部内容，只对 `type="text"` 有效 |
-| prepend | 输入框前置内容，只对 `type="text"` 有效 |
+| prepend | 输入框前置内容，只对 `type="text | textarea"` 有效 |
 | append | 输入框后置内容，只对 `type="text"` 有效 |
 
 ### Input Events

@@ -1,4 +1,4 @@
-import { createVue, triggerEvent, destroyVM } from '../util';
+import { createVue, triggerEvent, destroyVM } from '../../../test/unit/util';
 
 describe('Tooltip', () => {
   let vm;
@@ -8,9 +8,9 @@ describe('Tooltip', () => {
 
   it('create', done => {
     vm = createVue(`
-      <el-tooltip ref="tooltip" content="提示文字">
+      <af-tooltip ref="tooltip" content="提示文字">
         <button>click</button>
-      </el-tooltip>`);
+      </af-tooltip>`);
 
     vm.$nextTick(_ => {
       expect(vm.$refs.tooltip.popperVM.$el).to.have.property('textContent', '提示文字');
@@ -20,9 +20,9 @@ describe('Tooltip', () => {
 
   it('custom popper class', done => {
     vm = createVue(`
-      <el-tooltip ref="tooltip" content="提示文字" popper-class="custom-popper">
+      <af-tooltip ref="tooltip" content="提示文字" popper-class="custom-popper">
         <button>click</button>
-      </el-tooltip>`);
+      </af-tooltip>`);
     vm.$nextTick(_ => {
       expect(vm.$refs.tooltip.popperVM.$el.classList.contains('custom-popper')).to.true;
       done();
@@ -32,9 +32,9 @@ describe('Tooltip', () => {
   describe('manual', () => {
     const vm = createVue({
       template: `
-        <el-tooltip ref="tooltip" manual content="abc" v-model="show">
+        <af-tooltip ref="tooltip" manual content="abc" v-model="show">
           <button>click</button>
-        </el-tooltip>
+        </af-tooltip>
       `,
 
       data() {
@@ -69,9 +69,9 @@ describe('Tooltip', () => {
 
   describe('hover', () => {
     const vm = createVue(`
-      <el-tooltip ref="tooltip" content="提示文字">
+      <af-tooltip ref="tooltip" content="提示文字">
         <button>click</button>
-      </el-tooltip>
+      </af-tooltip>
     `);
     const tooltip = vm.$refs.tooltip;
 
@@ -89,9 +89,9 @@ describe('Tooltip', () => {
 
   it('light mode', done => {
     vm = createVue(`
-      <el-tooltip ref="tooltip" content="abc" effect="light">
+      <af-tooltip ref="tooltip" content="abc" effect="light">
         <button>abc</button>
-      </el-tooltip>
+      </af-tooltip>
     `);
     vm.$nextTick(_ => {
       expect(vm.$refs.tooltip.popperVM.$el.classList.contains('is-light')).to.exist;
@@ -100,9 +100,9 @@ describe('Tooltip', () => {
   });
   it('hide after', done => {
     vm = createVue(`
-      <el-tooltip ref="tooltip" content="提示文字" :hide-after="300">
+      <af-tooltip ref="tooltip" content="提示文字" :hide-after="300">
         <button>click</button>
-      </el-tooltip>`);
+      </af-tooltip>`);
     const tooltip = vm.$refs.tooltip;
     vm.$nextTick(_ => {
       triggerEvent(tooltip.$el, 'mouseenter');
@@ -117,9 +117,9 @@ describe('Tooltip', () => {
   });
   it('remove focus', done => {
     vm = createVue(`
-    <el-tooltip ref="tooltip" content="提示文字" :hide-after="300">
+    <af-tooltip ref="tooltip" content="提示文字" :hide-after="300">
       <button>click</button>
-    </el-tooltip>`);
+    </af-tooltip>`);
     const tooltip = vm.$refs.tooltip;
     vm.$nextTick(_ => {
       triggerEvent(tooltip.$el, 'mouseenter');
@@ -135,9 +135,9 @@ describe('Tooltip', () => {
   });
   it('reference element focus', done => {
     vm = createVue(`
-    <el-tooltip ref="tooltip" content="提示文字">
+    <af-tooltip ref="tooltip" content="提示文字">
       <button>click</button>
-    </el-tooltip>`);
+    </af-tooltip>`);
     const tooltip = vm.$refs.tooltip;
     vm.$nextTick(_ => {
       triggerEvent(tooltip.$el, 'focus');

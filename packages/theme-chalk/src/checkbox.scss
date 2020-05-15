@@ -13,6 +13,7 @@
   align-items: center;
   white-space: nowrap;
   user-select: none;
+  vertical-align: middle;
 
   @include when(bordered) {
     padding: $--checkbox-bordered-padding;

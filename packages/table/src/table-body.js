@@ -89,7 +89,7 @@ export default {
                 }
               </tr>,
               this.store.isRowExpanded(row)
-                ? (<tr>
+                ? (<tr class={this.stripe && $index % 2 === 1 ? 'af-table__row--striped' : ''} >
                   <td colspan={ this.columns.length } class="af-table__expanded-cell">
                     { this.table.renderExpanded ? this.table.renderExpanded(h, { row, $index, store: this.store }) : ''}
                   </td>

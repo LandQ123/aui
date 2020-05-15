@@ -5,6 +5,7 @@
 @import "button";
 @import "checkbox";
 @import "checkbox-group";
+@import "tree";
 
 @include b(transfer) {
   font-size: $--font-size-mini;
@@ -89,6 +90,7 @@
 
   @include e(body) {
     height: $--transfer-panel-body-height;
+    box-sizing: content-box;
     @include when(with-footer) {
       padding-bottom: $--transfer-panel-footer-height;
     }
@@ -109,8 +111,14 @@
         box-sizing: border-box;
       }
     }
+    .af-tree {
+      .af-tree-node__content {
+        &:hover {
+          background-color: #ddf4ff;
+        }
+      }
+    }
   }
-
   @include e(item) {
     height: $--transfer-item-height;
     // line-height: $--transfer-item-height;

@@ -8,15 +8,21 @@
   position: relative;
   font-size: $--font-size-mini;
   line-height: $--input-height;
+  height: $--input-height;
 
   .af-input,
   .af-input__inner {
     cursor: pointer;
   }
 
+  .af-input-group__prepend {
+    background-color: $--color-blue-primary;
+  }
+
   .af-input__inner {
     background-color: $--color-blue-primary; 
-    border-color:$--color-blue-primary;
+    // border-color:$--color-blue-primary;
+    border: none;
     &::placeholder {
       color: $--color-text-placeholder-primary;
       // font-weight: $--font-weight-bold;
@@ -61,21 +67,25 @@
   @include e(label) {
     position: absolute;
     left: 0;
-    top: 0;
-    height: 100%;
+    top: 2px;
     padding: 0 25px 0 15px;
     color: $--color-primary;
-    width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    box-sizing: border-box;
+    box-sizing: content-box;
     cursor: pointer;
     text-align: left;
     font-size: inherit;
-
     span {
       color: $--color-primary;
+    }
+
+    span.label {
+      color: transparent;
+      display: inline-block;
+      margin-left: -4px;
+      margin-right: 1px;
     }
   }
 

@@ -59,11 +59,8 @@
   import { generateId } from 'aui/src/utils/util';
   export default {
     mixins: [Locale],
-
     name: 'AfTransferPanel',
-
     componentName: 'AfTransferPanel',
-
     components: {
       AfInput,
       AfButton,

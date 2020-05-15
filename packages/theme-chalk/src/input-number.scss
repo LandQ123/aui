@@ -7,29 +7,30 @@
   display: inline-block;
   // width: 100px;
   line-height: #{$--input-height - 2};
+  &:hover {
+    border-color: $--input-hover-border;
+  }
+  &:focus {
+    border-color: $--input-hover-border;
+  }
 
   .af-input {
     display: block;
-    // width: 100px;
+    width: auto;
     &__inner {
       -webkit-appearance: none;
       padding-left: #{$--input-height + 10};
       padding-right: #{$--input-height + 10};
       text-align: center;
       color: #4183D7;
-      &:hover {
-        border-color: $--input-hover-border;
-      }
-      &:focus {
-        border: 1px solid #A0C1EB;
-      }
+      border: none;
     }
   }
 
   @include e((increase, decrease)) {
     position: absolute;
     z-index: 1;
-    top: 1px;
+    top: 2px;
     width: $--input-height;
     height: auto;
     text-align: center;
@@ -82,58 +83,58 @@
     }
   }
 
-  @include m(medium) {
-    width: 100px;
-    line-height: #{$--input-medium-height - 2};
+  // @include m(medium) {
+  //   width: 100px;
+  //   line-height: #{$--input-medium-height - 2};
 
-    @include e((increase, decrease)) {
-      width: $--input-medium-height;
-      font-size: $--input-medium-font-size;
-    }
+  //   @include e((increase, decrease)) {
+  //     width: $--input-medium-height;
+  //     font-size: $--input-medium-font-size;
+  //   }
 
-    .af-input__inner {
-      padding-left: #{$--input-medium-height + 7};
-      padding-right: #{$--input-medium-height + 7};
-    }
-  }
+  //   .af-input__inner {
+  //     padding-left: #{$--input-medium-height + 7};
+  //     padding-right: #{$--input-medium-height + 7};
+  //   }
+  // }
 
-  @include m(small) {
-    width: 100px;
-    line-height: #{$--input-small-height - 2};
+  // @include m(small) {
+  //   width: 100px;
+  //   line-height: #{$--input-small-height - 2};
 
-    @include e((increase, decrease)) {
-      width: $--input-small-height;
-      font-size: $--input-small-font-size;
+  //   @include e((increase, decrease)) {
+  //     width: $--input-small-height;
+  //     font-size: $--input-small-font-size;
 
-      [class*=af-icon] {
-        transform: scale(.9);
-      }
-    }
+  //     [class*=af-icon] {
+  //       transform: scale(.9);
+  //     }
+  //   }
 
-    .af-input__inner {
-      padding-left: #{$--input-small-height + 7};
-      padding-right: #{$--input-small-height + 7};
-    }
-  }
+  //   .af-input__inner {
+  //     padding-left: #{$--input-small-height + 7};
+  //     padding-right: #{$--input-small-height + 7};
+  //   }
+  // }
 
-  @include m(mini) {
-    width: 100px;
-    line-height: #{$--input-mini-height - 2};
+  // @include m(mini) {
+  //   width: 100px;
+  //   line-height: #{$--input-mini-height - 2};
 
-    @include e((increase, decrease)) {
-      width: $--input-mini-height;
-      font-size: $--input-mini-font-size;
+  //   @include e((increase, decrease)) {
+  //     width: $--input-mini-height;
+  //     font-size: $--input-mini-font-size;
 
-      [class*=af-icon] {
-        transform: scale(.8);
-      }
-    }
+  //     [class*=af-icon] {
+  //       transform: scale(.8);
+  //     }
+  //   }
 
-    .af-input__inner {
-      padding-left: #{$--input-mini-height + 7};
-      padding-right: #{$--input-mini-height + 7};
-    }
-  }
+  //   .af-input__inner {
+  //     padding-left: #{$--input-mini-height + 7};
+  //     padding-right: #{$--input-mini-height + 7};
+  //   }
+  // }
 
   @include when(without-controls) {
     .af-input__inner {
@@ -146,6 +147,7 @@
     .af-input-number {
       width: 36px;
       height: 48px;
+      border: 1px solid transparent;
     }
     .af-input {
       width: 36px;
@@ -163,7 +165,7 @@
     @include e((increase, decrease)) {
       // height: auto;
       // line-height: #{($--input-height - 2) / 2};
-      width: 34px;
+      width: 36px;
       text-align: center;
       height: 12px;
       line-height: 12px;

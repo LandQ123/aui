@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Main from './main.vue';
-import { PopupManager } from 'aui/src/utils/popup';
+// import { PopupManager } from 'aui/src/utils/popup';
 import { isVNode } from 'aui/src/utils/vdom';
 let MessageConstructor = Vue.extend(Main);
 
@@ -22,28 +22,26 @@ const Message = function(options) {
   options.onClose = function() {
     Message.close(id, userOnClose);
   };
-  // 默认配置
-  if (options.onDefault !== false) {
-    if (options.type === 'success') {
-      options.showClose = true;
-    } else {
-      options.duration = 0;
-      options.showClose = true;
+  instance = new MessageConstructor();
+  for (let prop in options) {
+    if (options.hasOwnProperty(prop)) {
+      instance[prop] = options[prop];
     }
   }
-  instance = new MessageConstructor({
-    data: options
-  });
   instance.id = id;
   if (isVNode(instance.message)) {
     instance.$slots.default = [instance.message];
     instance.message = null;
   }
+  ['modal', 'showClose', 'closeOnClickModal', 'closeOnPressEscape', 'closeOnHashChange'].forEach(prop => {
+    if (instance[prop] === undefined) {
+      instance[prop] = true;
+    }
+  });
   instance.vm = instance.$mount();
   document.body.appendChild(instance.vm.$el);
   instance.vm.visible = true;
   instance.dom = instance.vm.$el;
-  instance.dom.style.zIndex = PopupManager.nextZIndex();
   instances.push(instance);
   return instance.vm;
 };

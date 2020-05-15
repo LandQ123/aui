@@ -62,6 +62,20 @@
 ```
 :::
 
+### 只有total情况下整体高度为20px
+
+在空间有限和只有统计的情况下。
+
+:::demo 只有layout="total"情况下整体高度为20px
+```html
+<af-pagination
+  small
+  layout="total"
+  :total="50">
+</af-pagination>
+```
+:::
+
 ### 附加功能
 
 根据场景需要，可以添加其他功能模块。
@@ -170,8 +184,14 @@
   }
 </script>
 <style>
+
+   .demo-pagination {
+     background: #ddd;
+   }
+
   .demo-pagination .source.first {
     padding: 0;
+    background: #ddd;
   }
 
   .demo-pagination .first .block {

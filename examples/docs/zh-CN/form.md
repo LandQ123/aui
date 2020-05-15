@@ -39,7 +39,8 @@
           confirmPpassword: '',
           position: '',
           busType: [],
-          remark: ''
+          remark: '',
+          date: ''
         },
         afFormSelfValid:{
           userName: '',
@@ -197,15 +198,15 @@
 <af-form :model="afForm" ref="afForm">
   <af-form-item>
     <af-input placeholder="请输入" v-model="afForm.userName">
-      <span slot="prepend">用户名：</span>
+      <span slot="prepend">用户名:</span>
     </af-input>
   </af-form-item>
   <af-form-item>
     <af-input placeholder="请输入" v-model="afForm.name">
-      <span slot="prepend">姓名：</span>
+      <span slot="prepend">姓名:</span>
     </af-input>
   </af-form-item>
-  <af-form-item label="性别：">
+  <af-form-item label="性别:">
     <af-radio-group v-model="afForm.sex">
       <af-radio-button label="1">男</af-radio-button>
       <af-radio-button label="2">女</af-radio-button>
@@ -213,16 +214,16 @@
   </af-form-item>
   <af-form-item>
     <af-input placeholder="请输入" v-model="afForm.password" type="password">
-      <span slot="prepend">设置密码：</span>
+      <span slot="prepend">设置密码:</span>
     </af-input>
   </af-form-item>
   <af-form-item>
     <af-input placeholder="请输入" v-model="afForm.confirmPpassword" type="password">
-      <span slot="prepend">确认密码：</span>
+      <span slot="prepend">确认密码:</span>
     </af-input>
   </af-form-item>
   <af-form-item>
-    <af-select v-model="afForm.position" placeholder="请选择职务" clearable >
+    <af-select v-model="afForm.position" placeholder="请选择职务" label="请选择职务:" clearable>
       <af-option
         v-for="item in positionOptions"
         :key="item.value"
@@ -276,10 +277,10 @@
 :::
 
 :::tip
-W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.html#SEC8.2)：
+W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.html#SEC8.2):
 > <i>When there is only one single-line text input field in a form, the user agent should accept Enter in that field as a request to submit the form.</i>
 
-即：当一个 form 元素中只有一个输入框时，在该输入框中按下回车应提交该表单。如果希望阻止这一默认行为，可以在 `<af-form>` 标签上添加 `@submit.native.prevent`。
+即:当一个 form 元素中只有一个输入框时，在该输入框中按下回车应提交该表单。如果希望阻止这一默认行为，可以在 `<af-form>` 标签上添加 `@submit.native.prevent`。
 :::
 
 
@@ -292,15 +293,15 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 <af-form :model="afFormValid" ref="afFormValid" :rules="rules">
   <af-form-item prop="userName">
     <af-input placeholder="请输入" v-model="afFormValid.userName">
-      <span slot="prepend">用户名：</span>
+      <span slot="prepend">用户名:</span>
     </af-input>
   </af-form-item>
   <af-form-item prop="name">
     <af-input placeholder="请输入" v-model="afFormValid.name">
-      <span slot="prepend">姓名：</span>
+      <span slot="prepend">姓名:</span>
     </af-input>
   </af-form-item>
-  <af-form-item prop="sex" label="性别：" label-width="50px">
+  <af-form-item prop="sex" label="性别:" label-width="50px">
     <af-radio-group v-model="afFormValid.sex">
       <af-radio-button label="1">男</af-radio-button>
       <af-radio-button label="2">女</af-radio-button>
@@ -308,15 +309,15 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
   </af-form-item>
   <af-form-item prop="password">
     <af-input placeholder="请输入" v-model="afFormValid.password" type="password">
-      <span slot="prepend">设置密码：</span>
+      <span slot="prepend">设置密码:</span>
     </af-input>
   </af-form-item>
   <af-form-item prop="confirmPpassword">
     <af-input placeholder="请输入" v-model="afFormValid.confirmPpassword" type="password">
-      <span slot="prepend">确认密码：</span>
+      <span slot="prepend">确认密码:</span>
     </af-input>
   </af-form-item>
-  <af-form-item prop="position" style="width: 178px;">
+  <af-form-item prop="position">
     <af-select v-model="afFormValid.position" placeholder="请选择职务" clearable >
       <af-option
         v-for="item in positionOptions"
@@ -326,7 +327,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
       </af-option>
     </af-select>
   </af-form-item>
-  <af-form-item prop="busType" label="业务类型：" label-width="73px">
+  <af-form-item prop="busType" label="业务类型:" label-width="73px">
     <af-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</af-checkbox>
     <af-checkbox-group v-model="afFormValid.busType" @change="handleCheckedBusTypeChange">
       <af-checkbox v-for="(type, index) in busTypeOptions" :label="type" :key="index">{{type}}</af-checkbox>
@@ -340,7 +341,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
       start-placeholder="开始日期"
       end-placeholder="结束日期"
       :picker-options="pickerOptions"
-      label="日期：">
+      label="日期:">
     </af-date-picker>
   </af-form-item>
   <af-form-item prop="remark">
@@ -461,7 +462,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 :::
 
 :::tip
-需要校验的表单项是【label】属性类型时，需要设置【label-width】，确保校验提示信息对齐展示：
+需要校验的表单项是【label】属性类型时，需要设置【label-width】，确保校验提示信息对齐展示:
 <br>
 原有ElementUI表单的【label-width】是在el-form标签中统一配置，在AUI中有无【label】属性的表单项，所以【label-width】不在af-form标签中统一配置，对于无【label】属性的表单项需要校验时，校验提示信息是统一右对齐；在有【label】属性时，需要配置在af-form-item标签中配置【label-width】属性，校验提示信息对齐位置是距离左边【label-width】位置。
 :::
@@ -479,15 +480,15 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 <af-form :model="afFormSelfValid" ref="afFormSelfValid" :rules="selfRules">
   <af-form-item prop="userName">
     <af-input placeholder="请输入" v-model="afFormSelfValid.userName">
-      <span slot="prepend">用户名：</span>
+      <span slot="prepend">用户名:</span>
     </af-input>
   </af-form-item>
   <af-form-item prop="name">
     <af-input placeholder="请输入" v-model="afFormSelfValid.name">
-      <span slot="prepend">姓名：</span>
+      <span slot="prepend">姓名:</span>
     </af-input>
   </af-form-item>
-  <af-form-item prop="sex" label="性别：" label-width="50px">
+  <af-form-item prop="sex" label="性别:" label-width="50px">
     <af-radio-group v-model="afFormSelfValid.sex">
       <af-radio-button label="1">男</af-radio-button>
       <af-radio-button label="2">女</af-radio-button>
@@ -495,16 +496,16 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
   </af-form-item>
   <af-form-item prop="password">
     <af-input placeholder="请输入" v-model="afFormSelfValid.password" type="password">
-      <span slot="prepend">设置密码：</span>
+      <span slot="prepend">设置密码:</span>
     </af-input>
   </af-form-item>
   <af-form-item prop="confirmPpassword">
     <af-input placeholder="请输入" v-model="afFormSelfValid.confirmPpassword" type="password">
-      <span slot="prepend">确认密码：</span>
+      <span slot="prepend">确认密码:</span>
     </af-input>
   </af-form-item>
-  <af-form-item prop="position" style="width: 178px;">
-    <af-select v-model="afFormSelfValid.position" placeholder="请选择职务" clearable >
+  <af-form-item prop="position">
+    <af-select v-model="afFormSelfValid.position" placeholder="请选择职务" clearable label="选择职务:" style="width: 100%;">
       <af-option
         v-for="item in positionOptions"
         :key="item.value"
@@ -515,6 +516,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
   </af-form-item>
   <af-form-item prop="remark">
     <af-input type="textarea" placeholder="请输入内容" v-model="afFormSelfValid.remark" restrict total-count="100">
+      <span slot="prepend">内容:</span>
     </af-input>
   </af-form-item>
   <af-form-item>
@@ -632,7 +634,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 
 | 方法名      | 说明          | 参数
 |---------- |-------------- | --------------
-| validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))
+| validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数:是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))
 | validateField | 对部分表单字段进行校验的方法 | Function(prop: string, callback: Function(errorMessage: string))
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
 | clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性组成的数组，如不传则移除整个表单的校验结果 | Function(props: array)

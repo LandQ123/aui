@@ -67,6 +67,36 @@ const forced = {
     },
     sortable: false
   },
+  indexSelection: {
+    renderHeader: function(h, { store, column }) {
+      return <af-checkbox
+        disabled={ store.states.data && store.states.data.length === 0 }
+        indeterminate={ store.states.selection.length > 0 && !this.isAllSelected }
+        nativeOn-click={ this.toggleAllSelection }
+        value={ this.isAllSelected }
+        label={ column.label || '#' }
+      />;
+    },
+    renderCell: function(h, { row, column, store, $index }) {
+      let i = $index + 1;
+      const index = column.index;
+
+      if (typeof index === 'number') {
+        i = $index + index;
+      } else if (typeof index === 'function') {
+        i = index($index);
+      }
+      return <af-checkbox
+        nativeOn-click={ (event) => event.stopPropagation() }
+        value={ store.isSelected(row) }
+        disabled={ column.selectable ? !column.selectable.call(null, row, $index) : false }
+        on-input={ () => { store.commit('rowSelectedChanged', row); } }
+        label={ i }
+      />;
+    },
+    sortable: false,
+    resizable: false
+  },
   expand: {
     renderHeader: function(h, { column }) {
       return column.label || '';
